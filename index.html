@@ -1182,234 +1182,210 @@
         // ║                    ADBLOCK DETECTION                               ║
         // ╚════════════════════════════════════════════════════════════════════╝
         
-        async function detectAdBlock() {
-            return new Promise(async (resolve) => {
-                let blocked = false;
+        // ╔════════════════════════════════════════════════════════════════════╗
+// ║                    ADBLOCK DETECTION (FIXED)                       ║
+// ╚════════════════════════════════════════════════════════════════════╝
+
+async function detectAdBlock() {
+    return new Promise(async (resolve) => {
+        let blocked = false;
+        let checksRun = 0;
+        let checksFailed = 0;
+        
+        // Method 1: Bait element (most reliable)
+        try {
+            checksRun++;
+            const bait = document.createElement('div');
+            bait.innerHTML = '&nbsp;';
+            bait.className = 'adsbox ad-banner textads banner-ads';
+            bait.style.cssText = `
+                position: absolute !important;
+                left: -9999px !important;
+                top: -9999px !important;
+                width: 300px !important;
+                height: 250px !important;
+                background: #fff !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+            `;
+            document.body.appendChild(bait);
+            
+            // Wait for adblocker to act
+            await new Promise(r => setTimeout(r, 300));
+            
+            // Check if element was hidden/removed
+            const stillExists = document.body.contains(bait);
+            if (stillExists) {
+                const rect = bait.getBoundingClientRect();
+                const computedStyle = window.getComputedStyle(bait);
                 
-                // Method 1: Bait element with ad-like classes
-                try {
-                    const bait = document.createElement('div');
-                    bait.innerHTML = '&nbsp;';
-                    bait.className = 'adsbox ad-banner ad-placement pub_300x250 textads banner-ads adsense';
-                    bait.style.cssText = 'position: absolute; left: -9999px; top: -9999px; width: 300px; height: 250px; background: transparent;';
-                    document.body.appendChild(bait);
-                    
-                    await new Promise(r => setTimeout(r, 150));
-                    
-                    const computedStyle = window.getComputedStyle(bait);
-                    if (bait.offsetHeight === 0 || 
-                        bait.offsetWidth === 0 || 
-                        bait.clientHeight === 0 ||
-                        computedStyle.display === 'none' ||
-                        computedStyle.visibility === 'hidden' ||
-                        computedStyle.opacity === '0') {
-                        blocked = true;
-                    }
-                    
-                    bait.remove();
-                } catch (e) {
-                    console.log('Bait check error:', e);
+                if (rect.width === 0 || 
+                    rect.height === 0 || 
+                    computedStyle.display === 'none' ||
+                    computedStyle.visibility === 'hidden' ||
+                    computedStyle.opacity === '0') {
+                    checksFailed++;
+                    console.log('AdBlock: Bait element hidden');
                 }
-                
-                // Method 2: Create fake ad iframe
-                if (!blocked) {
-                    try {
-                        const iframe = document.createElement('iframe');
-                        iframe.className = 'adsbox';
-                        iframe.style.cssText = 'position: absolute; left: -9999px; width: 1px; height: 1px;';
-                        iframe.src = 'about:blank';
-                        document.body.appendChild(iframe);
-                        
-                        await new Promise(r => setTimeout(r, 100));
-                        
-                        if (iframe.offsetHeight === 0 || iframe.clientHeight === 0) {
-                            blocked = true;
-                        }
-                        
-                        iframe.remove();
-                    } catch (e) {
-                        console.log('Iframe check error:', e);
-                    }
-                }
-                
-                // Method 3: Fetch test to ad domain
-                if (!blocked) {
-                    try {
-                        const controller = new AbortController();
-                        const timeoutId = setTimeout(() => controller.abort(), 2000);
-                        
-                        await fetch('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {
-                            method: 'HEAD',
-                            mode: 'no-cors',
-                            cache: 'no-store',
-                            signal: controller.signal
-                        });
-                        
-                        clearTimeout(timeoutId);
-                    } catch (e) {
-                        if (e.name !== 'AbortError') {
-                            blocked = true;
-                        }
-                    }
-                }
-                
-                // Method 4: Check for ad container visibility
-                if (!blocked) {
-                    try {
-                        const adTest = document.getElementById('ad-test-element');
-                        if (adTest) {
-                            const rect = adTest.getBoundingClientRect();
-                            if (rect.height === 0 || rect.width === 0) {
-                                // Could be blocked
-                            }
-                        }
-                    } catch (e) {
-                        console.log('Container check error:', e);
-                    }
-                }
-                
-                // Method 5: Check window properties
-                if (!blocked) {
-                    try {
-                        // Some adblockers define these
-                        if (window.hasOwnProperty('_AdBlocker') || 
-                            window.hasOwnProperty('adblock') ||
-                            document.body.classList.contains('adblock')) {
-                            blocked = true;
-                        }
-                    } catch (e) {
-                        console.log('Property check error:', e);
-                    }
-                }
-                
-                resolve(blocked);
-            });
+            } else {
+                checksFailed++;
+                console.log('AdBlock: Bait element removed');
+            }
+            
+            // Clean up
+            if (stillExists) bait.remove();
+        } catch (e) {
+            console.log('AdBlock check 1 error:', e);
         }
+        
+        // Method 2: Google Ads fetch test
+        try {
+            checksRun++;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
+            
+            const response = await fetch('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {
+                method: 'HEAD',
+                mode: 'no-cors',
+                cache: 'no-store',
+                signal: controller.signal
+            });
+            
+            clearTimeout(timeoutId);
+            // If we get here, fetch succeeded (not blocked)
+            console.log('AdBlock: Google Ads fetch OK');
+            
+        } catch (e) {
+            if (e.name === 'AbortError') {
+                // Timeout - might be slow connection, not adblock
+                console.log('AdBlock: Fetch timeout (not counted as block)');
+            } else {
+                checksFailed++;
+                console.log('AdBlock: Google Ads fetch blocked');
+            }
+        }
+        
+        // Method 3: DoubleClick fetch test
+        try {
+            checksRun++;
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
+            
+            const response = await fetch('https://static.doubleclick.net/instream/ad_status.js', {
+                method: 'HEAD',
+                mode: 'no-cors',
+                cache: 'no-store',
+                signal: controller.signal
+            });
+            
+            clearTimeout(timeoutId);
+            console.log('AdBlock: DoubleClick fetch OK');
+            
+        } catch (e) {
+            if (e.name !== 'AbortError') {
+                checksFailed++;
+                console.log('AdBlock: DoubleClick fetch blocked');
+            }
+        }
+        
+        // Determine if blocked based on failed checks
+        // Require at least 2 failed checks to confirm adblock
+        // This reduces false positives
+        blocked = checksFailed >= 2;
+        
+        console.log(`AdBlock Detection: ${checksRun} checks, ${checksFailed} failed, blocked=${blocked}`);
+        
+        resolve(blocked);
+    });
+}
         
         // ╔════════════════════════════════════════════════════════════════════╗
         // ║                    VPN/PROXY DETECTION                             ║
         // ╚════════════════════════════════════════════════════════════════════╝
         
-        async function detectVPN() {
-            return new Promise(async (resolve) => {
-                let isVPN = false;
-                
+        // ╔════════════════════════════════════════════════════════════════════╗
+// ║                    VPN/PROXY DETECTION (FIXED)                     ║
+// ╚════════════════════════════════════════════════════════════════════╝
+
+async function detectVPN() {
+    return new Promise(async (resolve) => {
+        let isVPN = false;
+        
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+            
+            // Try multiple APIs
+            let data = null;
+            
+            const apis = [
+                'https://ipapi.co/json/',
+                'https://ipinfo.io/json',
+                'https://ip-api.com/json/?fields=status,message,org,as,proxy,hosting'
+            ];
+            
+            for (const api of apis) {
                 try {
-                    // Multiple API checks for reliability
-                    const apis = [
-                        'https://ipapi.co/json/',
-                        'https://ipinfo.io/json'
-                    ];
+                    const response = await fetch(api, {
+                        signal: controller.signal,
+                        cache: 'no-store'
+                    });
                     
-                    let data = null;
-                    
-                    for (const api of apis) {
-                        try {
-                            const controller = new AbortController();
-                            const timeoutId = setTimeout(() => controller.abort(), 5000);
-                            
-                            const response = await fetch(api, {
-                                signal: controller.signal,
-                                cache: 'no-store'
-                            });
-                            
-                            clearTimeout(timeoutId);
-                            
-                            if (response.ok) {
-                                data = await response.json();
-                                break;
-                            }
-                        } catch (e) {
-                            continue;
-                        }
+                    if (response.ok) {
+                        data = await response.json();
+                        console.log('VPN Check API response:', api, data);
+                        break;
                     }
-                    
-                    if (data) {
-                        // VPN/Datacenter keywords
-                        const vpnKeywords = [
-                            'vpn', 'proxy', 'hosting', 'datacenter', 'data center', 'data-center',
-                            'cloud', 'amazon', 'aws', 'ec2', 'google cloud', 'gcp', 'gce',
-                            'digitalocean', 'digital ocean', 'linode', 'vultr', 'upcloud',
-                            'ovh', 'hetzner', 'azure', 'microsoft', 'oracle cloud', 'oci',
-                            'cloudflare', 'akamai', 'fastly', 'server', 'vps', 'dedicated',
-                            'nord', 'express', 'proton', 'surfshark', 'private internet',
-                            'tunnel', 'hide', 'anonymous', 'mullvad', 'pia', 'ivacy',
-                            'cyberghost', 'ipvanish', 'hotspot', 'windscribe', 'trust.zone',
-                            'torguard', 'purevpn', 'zenmate', 'ultrasurf', 'browsec',
-                            'psiphon', 'tor', 'onion', 'i2p', 'leaseweb', 'choopa',
-                            'm247', 'datacamp', 'tzulo', 'psychz', 'cogent', 'level3',
-                            'quadranet', 'hostwinds', 'contabo', 'ionos', 'scaleway',
-                            'rackspace', 'softlayer', 'ibm cloud', 'alibaba cloud',
-                            'tencent cloud', 'kamatera', 'hostinger', 'namecheap',
-                            'godaddy', 'bluehost', 'dreamhost', 'a2hosting'
-                        ];
-                        
-                        // Check organization/ASN
-                        const org = (data.org || data.company?.name || '').toLowerCase();
-                        const asn = (data.asn || data.asn?.name || '').toLowerCase();
-                        const isp = (data.isp || '').toLowerCase();
-                        
-                        const checkText = `${org} ${asn} ${isp}`;
-                        
-                        for (const keyword of vpnKeywords) {
-                            if (checkText.includes(keyword)) {
-                                isVPN = true;
-                                console.log('VPN detected via keyword:', keyword);
-                                break;
-                            }
-                        }
-                        
-                        // Timezone mismatch check
-                        if (!isVPN && data.timezone) {
-                            try {
-                                const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                                const ipCountry = (data.country_code || data.country || '').toUpperCase();
-                                
-                                // Map of country codes to typical timezone regions
-                                const countryTimezones = {
-                                    'US': ['America'],
-                                    'CA': ['America'],
-                                    'GB': ['Europe/London'],
-                                    'DE': ['Europe'],
-                                    'FR': ['Europe'],
-                                    'IN': ['Asia/Kolkata', 'Asia/Calcutta'],
-                                    'JP': ['Asia/Tokyo'],
-                                    'AU': ['Australia'],
-                                    'BR': ['America/Sao_Paulo'],
-                                    'RU': ['Europe/Moscow']
-                                };
-                                
-                                if (ipCountry && browserTimezone && countryTimezones[ipCountry]) {
-                                    const expectedRegions = countryTimezones[ipCountry];
-                                    const matches = expectedRegions.some(region => 
-                                        browserTimezone.toLowerCase().includes(region.toLowerCase())
-                                    );
-                                    
-                                    if (!matches) {
-                                        // Timezone doesn't match IP location - possible VPN
-                                        // But don't block, just log
-                                        console.log('Timezone mismatch:', browserTimezone, 'vs', ipCountry);
-                                    }
-                                }
-                            } catch (e) {
-                                console.log('Timezone check error:', e);
-                            }
-                        }
-                        
-                        // Check explicit flags if API provides them
-                        if (data.proxy === true || data.hosting === true || data.vpn === true) {
-                            isVPN = true;
-                        }
-                    }
-                    
                 } catch (e) {
-                    console.log('VPN detection error:', e);
-                    // Don't block on error
+                    console.log('VPN API failed:', api);
+                    continue;
+                }
+            }
+            
+            clearTimeout(timeoutId);
+            
+            if (data) {
+                // Check for explicit proxy/hosting flags
+                if (data.proxy === true || data.hosting === true) {
+                    isVPN = true;
+                    console.log('VPN: Explicit flag detected');
                 }
                 
-                resolve(isVPN);
-            });
+                // Check organization name for VPN keywords
+                if (!isVPN) {
+                    const org = (data.org || data.as || data.company?.name || '').toLowerCase();
+                    
+                    // Only check for DEFINITE VPN providers, not all hosting
+                    const vpnProviders = [
+                        'nordvpn', 'expressvpn', 'protonvpn', 'surfshark',
+                        'mullvad', 'private internet access', 'pia', 'cyberghost',
+                        'ipvanish', 'windscribe', 'hotspot shield', 'tunnelbear',
+                        'purevpn', 'vyprvpn', 'hide.me', 'zenmate', 'ivacy',
+                        'torguard', 'perfect privacy', 'airvpn', 'astrill',
+                        'psiphon', 'ultrasurf', 'tor exit', 'tor relay'
+                    ];
+                    
+                    for (const provider of vpnProviders) {
+                        if (org.includes(provider)) {
+                            isVPN = true;
+                            console.log('VPN: Provider detected:', provider);
+                            break;
+                        }
+                    }
+                }
+            }
+            
+        } catch (e) {
+            console.log('VPN detection error:', e);
+            // On error, don't block - give user benefit of doubt
+            isVPN = false;
         }
+        
+        console.log('VPN Detection result:', isVPN);
+        resolve(isVPN);
+    });
+}
         
         // ╔════════════════════════════════════════════════════════════════════╗
         // ║                      URL PARAMETERS                                ║
