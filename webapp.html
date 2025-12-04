@@ -3,150 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Movie Download</title>
-  
-  <!-- Telegram Web App Script -->
+  <title>Download Movie</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
     :root {
-      --bg-color: #ffffff;
-      --text-color: #000000;
-      --card-bg: #f5f5f5;
-      --accent-color: #e94560;
+      --bg: #ffffff;
+      --text: #000000;
+      --card: #f5f5f5;
+      --accent: #e94560;
     }
-
+    
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--tg-theme-bg-color, var(--bg-color));
-      color: var(--tg-theme-text-color, var(--text-color));
+      background: var(--tg-theme-bg-color, var(--bg));
+      color: var(--tg-theme-text-color, var(--text));
       min-height: 100vh;
       padding: 20px;
       padding-bottom: 100px;
     }
-
-    body.dark {
-      --bg-color: #1a1a2e;
-      --text-color: #ffffff;
-      --card-bg: #2a2a3e;
-    }
-
-    .container {
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    /* Header */
-    .header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .movie-icon {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+    
+    body.dark { --bg: #1a1a2e; --text: #fff; --card: #2a2a3e; }
+    
+    .container { max-width: 400px; margin: 0 auto; }
+    
+    .header { text-align: center; margin-bottom: 30px; }
+    
+    .icon {
+      width: 80px; height: 80px;
+      background: linear-gradient(135deg, #e94560, #ff6b6b);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       margin: 0 auto 20px;
       font-size: 40px;
       box-shadow: 0 8px 25px rgba(233, 69, 96, 0.3);
     }
-
-    .header h1 {
-      font-size: 22px;
-      margin-bottom: 8px;
-    }
-
-    .header p {
-      color: #888;
-      font-size: 14px;
-    }
-
-    /* File Info Card */
+    
+    .header h1 { font-size: 22px; margin-bottom: 8px; }
+    .header p { color: #888; font-size: 14px; }
+    
     .file-card {
-      background: var(--tg-theme-secondary-bg-color, var(--card-bg));
+      background: var(--tg-theme-secondary-bg-color, var(--card));
       border-radius: 16px;
       padding: 20px;
       margin-bottom: 24px;
     }
-
+    
     .file-name {
       font-size: 16px;
       font-weight: 600;
       margin-bottom: 12px;
       word-break: break-all;
     }
-
-    .file-meta {
-      display: flex;
-      gap: 16px;
-      font-size: 13px;
-      color: #888;
-    }
-
-    /* Timer */
-    .timer-section {
-      text-align: center;
-      margin-bottom: 24px;
-    }
-
+    
+    .file-meta { display: flex; gap: 16px; font-size: 13px; color: #888; }
+    
+    .timer-section { text-align: center; margin-bottom: 24px; }
+    
     .timer-circle {
       position: relative;
-      width: 120px;
-      height: 120px;
+      width: 120px; height: 120px;
       margin: 0 auto 16px;
     }
-
-    .timer-circle svg {
-      transform: rotate(-90deg);
-    }
-
-    .timer-circle circle {
-      fill: none;
-      stroke-width: 8;
-    }
-
-    .timer-bg {
-      stroke: #e0e0e0;
-    }
-
-    body.dark .timer-bg {
-      stroke: #444;
-    }
-
+    
+    .timer-circle svg { transform: rotate(-90deg); }
+    .timer-circle circle { fill: none; stroke-width: 8; }
+    .timer-bg { stroke: #e0e0e0; }
+    body.dark .timer-bg { stroke: #444; }
+    
     .timer-progress {
-      stroke: var(--accent-color);
+      stroke: var(--accent);
       stroke-linecap: round;
       stroke-dasharray: 314;
       stroke-dashoffset: 314;
       transition: stroke-dashoffset 1s linear;
     }
-
+    
     .timer-text {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       font-size: 36px;
       font-weight: 700;
-      color: var(--accent-color);
+      color: var(--accent);
     }
-
-    .timer-label {
-      color: #888;
-      font-size: 14px;
-    }
-
-    /* Download Button */
+    
+    .timer-label { color: #888; font-size: 14px; }
+    
     .download-btn {
       display: none;
       width: 100%;
@@ -156,40 +100,28 @@
       border: none;
       border-radius: 12px;
       cursor: pointer;
-      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      background: linear-gradient(135deg, #e94560, #ff6b6b);
       color: white;
       margin-bottom: 24px;
-      transition: transform 0.2s;
     }
-
-    .download-btn:active {
-      transform: scale(0.98);
-    }
-
-    .download-btn.show {
-      display: block;
-      animation: fadeIn 0.5s ease;
-    }
-
-    .download-btn:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-
+    
+    .download-btn:active { transform: scale(0.98); }
+    .download-btn.show { display: block; animation: fadeIn 0.5s ease; }
+    .download-btn:disabled { opacity: 0.7; }
+    
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    /* Ad Section */
+    
     .ad-section {
       margin-top: 20px;
       padding: 16px;
-      background: var(--tg-theme-secondary-bg-color, var(--card-bg));
+      background: var(--tg-theme-secondary-bg-color, var(--card));
       border-radius: 12px;
       text-align: center;
     }
-
+    
     .ad-label {
       font-size: 10px;
       color: #aaa;
@@ -197,7 +129,7 @@
       letter-spacing: 1px;
       margin-bottom: 12px;
     }
-
+    
     .ad-container {
       min-height: 100px;
       display: flex;
@@ -206,89 +138,59 @@
       background: rgba(0,0,0,0.05);
       border-radius: 8px;
     }
-
-    body.dark .ad-container {
-      background: rgba(255,255,255,0.05);
-    }
-
-    /* States */
-    .loading {
-      text-align: center;
-      padding: 60px 20px;
-    }
-
+    
+    body.dark .ad-container { background: rgba(255,255,255,0.05); }
+    
+    .loading { text-align: center; padding: 60px 20px; }
+    
     .spinner {
-      width: 40px;
-      height: 40px;
+      width: 40px; height: 40px;
       border: 3px solid rgba(233, 69, 96, 0.2);
-      border-top: 3px solid #e94560;
+      border-top-color: #e94560;
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 0 auto 16px;
     }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
+    
+    @keyframes spin { to { transform: rotate(360deg); } }
+    
     .error-state, .success-state {
       display: none;
       text-align: center;
       padding: 60px 20px;
     }
-
-    .error-state.show, .success-state.show {
-      display: block;
-    }
-
-    .state-icon {
-      font-size: 60px;
-      margin-bottom: 20px;
-    }
-
-    .state-title {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .state-text {
-      color: #888;
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .main-state.hidden {
-      display: none;
-    }
+    
+    .error-state.show, .success-state.show { display: block; }
+    
+    .state-icon { font-size: 60px; margin-bottom: 20px; }
+    .state-title { font-size: 20px; font-weight: 600; margin-bottom: 10px; }
+    .state-text { color: #888; font-size: 14px; line-height: 1.5; }
+    
+    .main-state.hidden { display: none; }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Loading -->
     <div class="loading" id="loadingState">
       <div class="spinner"></div>
       <p>Loading...</p>
     </div>
 
-    <!-- Error -->
     <div class="error-state" id="errorState">
       <div class="state-icon">❌</div>
       <div class="state-title">Invalid Link</div>
-      <p class="state-text">This link is invalid or expired.<br>Please request a new one from the bot.</p>
+      <p class="state-text">This link is invalid or expired.<br>Please request a new one.</p>
     </div>
 
-    <!-- Success -->
     <div class="success-state" id="successState">
       <div class="state-icon">✅</div>
       <div class="state-title">File Sent!</div>
-      <p class="state-text">Check your chat with the bot.<br>Your movie is being sent!</p>
+      <p class="state-text">Check your chat with the bot.<br>Your movie is on the way!</p>
     </div>
 
-    <!-- Main Content -->
     <div class="main-state hidden" id="mainState">
       <div class="header">
-        <div class="movie-icon">🎬</div>
+        <div class="icon">🎬</div>
         <h1>Your Movie is Ready!</h1>
         <p>Wait a moment then download</p>
       </div>
@@ -312,19 +214,12 @@
         <p class="timer-label">Please wait...</p>
       </div>
 
-      <button class="download-btn" id="downloadBtn">
-        ⬇️ Get My File
-      </button>
+      <button class="download-btn" id="downloadBtn">⬇️ Get My File</button>
 
-      <!-- Ad Section -->
       <div class="ad-section">
         <div class="ad-label">Sponsored</div>
         <div class="ad-container" id="adContainer">
-          <!--
-            =============================================
-            PASTE YOUR ADSTERRA AD CODE HERE
-            =============================================
-          -->
+          <!-- PASTE YOUR AD CODE HERE -->
           <span style="color: #aaa; font-size: 12px;">Advertisement</span>
         </div>
       </div>
@@ -332,26 +227,18 @@
   </div>
 
   <script>
-    // Initialize Telegram Web App
     const tg = window.Telegram.WebApp;
-    
-    // Expand and setup
     tg.ready();
     tg.expand();
     
-    // Apply theme
-    if (tg.colorScheme === 'dark') {
-      document.body.classList.add('dark');
-    }
+    if (tg.colorScheme === 'dark') document.body.classList.add('dark');
 
-    // Get parameters
     const params = new URLSearchParams(window.location.search);
-    let payload = params.get('payload') || '';
-    let fileName = params.get('name') || 'Movie';
-    let fileSize = params.get('size') || '';
-    let quality = params.get('quality') || 'HD';
+    const payload = params.get('payload') || '';
+    const fileName = params.get('name') || 'Movie';
+    const fileSize = params.get('size') || '';
+    const quality = params.get('quality') || 'HD';
 
-    // DOM Elements
     const loadingState = document.getElementById('loadingState');
     const errorState = document.getElementById('errorState');
     const successState = document.getElementById('successState');
@@ -364,17 +251,14 @@
     const timerText = document.getElementById('timerText');
     const downloadBtn = document.getElementById('downloadBtn');
 
-    // Validate payload
     if (!payload) {
       loadingState.style.display = 'none';
       errorState.classList.add('show');
     } else {
-      // Show main content after short delay
       setTimeout(() => {
         loadingState.style.display = 'none';
         mainState.classList.remove('hidden');
         
-        // Display file info
         try {
           fileNameEl.textContent = decodeURIComponent(fileName);
           fileSizeEl.textContent = '📦 ' + decodeURIComponent(fileSize);
@@ -383,12 +267,10 @@
           fileNameEl.textContent = fileName;
         }
         
-        // Start timer
         startTimer();
       }, 800);
     }
 
-    // Timer
     const WAIT_TIME = 5;
     let remaining = WAIT_TIME;
     const circumference = 2 * Math.PI * 50;
@@ -397,22 +279,19 @@
       const interval = setInterval(() => {
         remaining--;
         timerText.textContent = remaining;
-        
-        const progress = (WAIT_TIME - remaining) / WAIT_TIME;
-        timerProgress.style.strokeDashoffset = circumference * (1 - progress);
+        timerProgress.style.strokeDashoffset = circumference * (1 - (WAIT_TIME - remaining) / WAIT_TIME);
         
         if (remaining <= 0) {
           clearInterval(interval);
-          showDownloadButton();
+          showDownload();
         }
       }, 1000);
     }
 
-    function showDownloadButton() {
+    function showDownload() {
       timerSection.style.display = 'none';
       downloadBtn.classList.add('show');
       
-      // Show Telegram MainButton
       tg.MainButton.setText('⬇️ Get My File');
       tg.MainButton.color = '#e94560';
       tg.MainButton.textColor = '#ffffff';
@@ -420,40 +299,28 @@
       tg.MainButton.onClick(handleDownload);
     }
 
-    // Download handler
     function handleDownload() {
-      // Disable buttons
       downloadBtn.disabled = true;
       downloadBtn.textContent = '⏳ Sending...';
       tg.MainButton.setText('⏳ Sending...');
       tg.MainButton.disable();
       
-      // Send data to bot
       tg.sendData(JSON.stringify({
         action: 'download',
         payload: payload
       }));
       
-      // Show success state
       setTimeout(() => {
         mainState.classList.add('hidden');
         successState.classList.add('show');
         tg.MainButton.hide();
         
-        // Close Mini App
-        setTimeout(() => {
-          tg.close();
-        }, 2000);
+        setTimeout(() => tg.close(), 2000);
       }, 1000);
     }
 
-    // Button click handler
     downloadBtn.addEventListener('click', handleDownload);
-
-    // Back button
-    tg.BackButton.onClick(() => {
-      tg.close();
-    });
+    tg.BackButton.onClick(() => tg.close());
   </script>
 </body>
 </html>
