@@ -1,392 +1,398 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Download Movie</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 24px;
-      padding: 48px 32px;
-      max-width: 420px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
-    }
-
-    .icon {
-      width: 100px;
-      height: 100px;
-      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 28px;
-      font-size: 50px;
-      box-shadow: 0 10px 40px rgba(233, 69, 96, 0.4);
-    }
-
-    h1 {
-      color: #1a1a2e;
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .subtitle {
-      color: #888;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-
-    .file-info {
-      background: #f8f9fa;
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 32px;
-    }
-
-    .file-name {
-      color: #1a1a2e;
-      font-size: 16px;
-      font-weight: 600;
-      word-break: break-all;
-      margin-bottom: 8px;
-    }
-
-    .file-meta {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      color: #666;
-      font-size: 13px;
-    }
-
-    .file-meta span {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    /* Timer */
-    .timer-container {
-      position: relative;
-      width: 130px;
-      height: 130px;
-      margin: 0 auto 28px;
-    }
-
-    .timer-ring {
-      transform: rotate(-90deg);
-    }
-
-    .timer-ring circle {
-      fill: none;
-      stroke-width: 10;
-    }
-
-    .timer-bg {
-      stroke: #e8e8e8;
-    }
-
-    .timer-progress {
-      stroke: url(#timerGradient);
-      stroke-linecap: round;
-      stroke-dasharray: 339;
-      stroke-dashoffset: 339;
-      transition: stroke-dashoffset 1s linear;
-    }
-
-    .timer-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 40px;
-      font-weight: 700;
-      color: #e94560;
-    }
-
-    .status {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-
-    /* Download Button */
-    .btn-download {
-      display: none;
-      width: 100%;
-      padding: 18px 32px;
-      font-size: 18px;
-      font-weight: 600;
-      border: none;
-      border-radius: 16px;
-      cursor: pointer;
-      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
-      color: white;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 30px rgba(233, 69, 96, 0.4);
-      text-decoration: none;
-    }
-
-    .btn-download:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(233, 69, 96, 0.5);
-    }
-
-    .btn-download.show {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      animation: slideUp 0.5s ease;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Ad Section */
-    .ad-section {
-      margin-top: 32px;
-      padding-top: 24px;
-      border-top: 1px solid #eee;
-    }
-
-    .ad-label {
-      font-size: 10px;
-      color: #ccc;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 12px;
-    }
-
-    .ad-box {
-      min-height: 100px;
-      background: #f8f9fa;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .ad-placeholder {
-      color: #ddd;
-      font-size: 12px;
-    }
-
-    /* Error */
-    .error-state {
-      display: none;
-    }
-
-    .error-state.show {
-      display: block;
-    }
-
-    .error-icon {
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
-    }
-
-    .main-state.hidden {
-      display: none;
-    }
-
-    /* Mobile */
-    @media (max-width: 480px) {
-      .card {
-        padding: 36px 24px;
-      }
-      h1 {
-        font-size: 20px;
-      }
-      .file-meta {
-        flex-direction: column;
-        gap: 8px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify - Get Your File</title>
+    
+    <!-- Adsterra Social Bar (paste your code) -->
+    <script type="text/javascript" src="//your-social-bar-code.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .movie-icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            font-size: 26px;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, #fff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .movie-name {
+            color: #00d4ff;
+            font-size: 18px;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .timer-container {
+            margin: 30px 0;
+        }
+        
+        .timer {
+            font-size: 64px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .timer.ready {
+            background: linear-gradient(135deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 25px 0;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ffa500, #00d4ff, #00ff88);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            transition: width 1s linear;
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .status {
+            font-size: 15px;
+            color: #aaa;
+            margin: 20px 0;
+            min-height: 24px;
+        }
+        
+        .steps {
+            text-align: left;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            font-size: 14px;
+            color: #888;
+            transition: color 0.3s;
+        }
+        
+        .step.active {
+            color: #00d4ff;
+        }
+        
+        .step.done {
+            color: #00ff88;
+        }
+        
+        .step-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 14px;
+        }
+        
+        .step.done .step-icon {
+            background: rgba(0, 255, 136, 0.2);
+        }
+        
+        .step.active .step-icon {
+            background: rgba(0, 212, 255, 0.2);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Hidden initially */
+        .btn-container {
+            display: none;
+        }
+        
+        .btn-container.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .get-file-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            color: #000;
+            text-decoration: none;
+            padding: 18px 50px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+        
+        .get-file-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+        }
+        
+        .note {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Ad Container */
+        .ad-box {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            min-height: 100px;
+        }
+        
+        .ad-label {
+            font-size: 10px;
+            color: #444;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <!-- Error State -->
-    <div class="error-state" id="errorState">
-      <div class="icon error-icon">❌</div>
-      <h1>Link Invalid</h1>
-      <p class="subtitle">This link is invalid or expired.</p>
-      <p style="color: #666; margin-top: 20px;">
-        Please request a new link from the bot.
-      </p>
-    </div>
-
-    <!-- Main State -->
-    <div class="main-state" id="mainState">
-      <div class="icon">🎬</div>
-      
-      <h1>Your Movie is Ready!</h1>
-      <p class="subtitle">High quality download link generated</p>
-
-      <div class="file-info">
-        <p class="file-name" id="fileName">Loading...</p>
-        <div class="file-meta">
-          <span id="fileSize">📦 --</span>
-          <span id="fileQuality">🎥 --</span>
-        </div>
-      </div>
-
-      <div class="timer-container" id="timerContainer">
-        <svg class="timer-ring" width="130" height="130" viewBox="0 0 130 130">
-          <defs>
-            <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#e94560"/>
-              <stop offset="100%" stop-color="#ff6b6b"/>
-            </linearGradient>
-          </defs>
-          <circle class="timer-bg" cx="65" cy="65" r="54"/>
-          <circle class="timer-progress" id="timerProgress" cx="65" cy="65" r="54"/>
-        </svg>
-        <span class="timer-text" id="timerText">5</span>
-      </div>
-
-      <p class="status" id="status">⏳ Please wait...</p>
-
-      <button class="btn-download" id="btnDownload">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12,16L19,9H15V4H9V9H5L12,16M5,20V18H19V20H5Z"/>
-        </svg>
-        Get My File
-      </button>
-
-      <!-- Ad Section -->
-      <div class="ad-section">
-        <p class="ad-label">Sponsored</p>
-        <div class="ad-box" id="adBox">
-          <!--
-            =============================================
-            PASTE YOUR ADSTERRA NATIVE AD CODE HERE
-            =============================================
-          -->
-          <span class="ad-placeholder">Advertisement</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!--
-    =============================================
-    PASTE YOUR POPUNDER AD CODE HERE (Optional)
-    =============================================
-  -->
-
-  <script>
-    (function() {
-      // Get URL parameters
-      const params = new URLSearchParams(window.location.search);
-      const fileUrl = params.get('url');
-      const fileName = params.get('name') || 'File';
-      const fileSize = params.get('size') || '';
-      const quality = params.get('quality') || '';
-
-      // DOM Elements
-      const errorState = document.getElementById('errorState');
-      const mainState = document.getElementById('mainState');
-      const fileNameEl = document.getElementById('fileName');
-      const fileSizeEl = document.getElementById('fileSize');
-      const fileQualityEl = document.getElementById('fileQuality');
-      const timerContainer = document.getElementById('timerContainer');
-      const timerProgress = document.getElementById('timerProgress');
-      const timerText = document.getElementById('timerText');
-      const status = document.getElementById('status');
-      const btnDownload = document.getElementById('btnDownload');
-
-      // Validate URL
-      if (!fileUrl) {
-        errorState.classList.add('show');
-        mainState.classList.add('hidden');
-        return;
-      }
-
-      // Display file info
-      try {
-        fileNameEl.textContent = decodeURIComponent(fileName);
-        fileSizeEl.textContent = '📦 ' + (fileSize ? decodeURIComponent(fileSize) : 'Unknown');
-        fileQualityEl.textContent = '🎥 ' + (quality ? decodeURIComponent(quality) : 'HD');
-      } catch (e) {
-        fileNameEl.textContent = fileName;
-      }
-
-      // Timer configuration
-      const WAIT_TIME = 5;
-      let remaining = WAIT_TIME;
-      const circumference = 2 * Math.PI * 54;
-
-      function updateTimer() {
-        const progress = (WAIT_TIME - remaining) / WAIT_TIME;
-        timerProgress.style.strokeDashoffset = circumference * (1 - progress);
-      }
-
-      // Countdown
-      const countdown = setInterval(function() {
-        remaining--;
-        timerText.textContent = remaining;
-        updateTimer();
-
-        if (remaining <= 0) {
-          clearInterval(countdown);
-          showDownload();
-        }
-      }, 1000);
-
-      function showDownload() {
-        timerContainer.style.display = 'none';
-        status.style.display = 'none';
-        btnDownload.classList.add('show');
-      }
-
-      // Download button click
-      btnDownload.addEventListener('click', function(e) {
-        e.preventDefault();
+    <div class="container">
+        <div class="movie-icon">🎬</div>
+        <h1>Your File is Ready!</h1>
+        <div class="movie-name" id="movieName">Loading...</div>
         
-        try {
-          // Decode the URL
-          let decoded = decodeURIComponent(fileUrl);
-          console.log('Opening URL:', decoded);
-          
-          // Open the link (works for both Telegram and regular URLs)
-          window.open(decoded, '_blank');
-          
-          // Also try direct navigation after a short delay
-          setTimeout(function() {
-            window.location.href = decoded;
-          }, 500);
-          
-        } catch (err) {
-          console.error('Error:', err);
-          window.location.href = fileUrl;
+        <div class="timer-container">
+            <div class="timer" id="timer">15</div>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progress" style="width: 0%"></div>
+        </div>
+        
+        <div class="status" id="status">🔐 Verifying your request...</div>
+        
+        <div class="steps">
+            <div class="step active" id="step1">
+                <div class="step-icon">1</div>
+                <span>Verifying request...</span>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-icon">2</div>
+                <span>Preparing your file...</span>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-icon">3</div>
+                <span>Almost ready...</span>
+            </div>
+        </div>
+        
+        <!-- Adsterra Native Banner Ad -->
+        <div class="ad-box">
+            <div class="ad-label">Sponsored</div>
+            <!-- 
+                PASTE YOUR ADSTERRA NATIVE BANNER CODE HERE
+                Get it from: Adsterra Dashboard > Native Banner
+            -->
+            <div id="ad-native"></div>
+        </div>
+        
+        <div class="btn-container" id="btnContainer">
+            <a href="#" class="get-file-btn" id="getFileBtn">
+                📥 Get File Now
+            </a>
+            <p class="note">Tap button, then tap <strong>START</strong> in Telegram</p>
+        </div>
+    </div>
+    
+    <!-- Adsterra Popunder (Optional - High Revenue) -->
+    <!--
+    <script 
+        type="text/javascript" 
+        src="//your-popunder-code.js">
+    </script>
+    -->
+
+    <script>
+        // ============ CONFIGURATION ============
+        const WAIT_TIME = 15; // seconds to wait
+        const BOT_USERNAME = "YourBotUsername"; // Your bot username without @
+        
+        // ============ GET URL PARAMETERS ============
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        const movieName = urlParams.get('movie') || urlParams.get('name') || 'Your Movie';
+        let callbackUrl = urlParams.get('callback');
+        
+        // Build callback URL if not provided
+        if (!callbackUrl && token) {
+            callbackUrl = `https://t.me/${BOT_USERNAME}?start=token_${token}`;
         }
-      });
-    })();
-  </script>
+        
+        // ============ DISPLAY MOVIE NAME ============
+        try {
+            document.getElementById('movieName').textContent = decodeURIComponent(movieName);
+        } catch (e) {
+            document.getElementById('movieName').textContent = movieName;
+        }
+        
+        // ============ ELEMENTS ============
+        const timerEl = document.getElementById('timer');
+        const progressEl = document.getElementById('progress');
+        const statusEl = document.getElementById('status');
+        const btnContainer = document.getElementById('btnContainer');
+        const getFileBtn = document.getElementById('getFileBtn');
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        
+        // Set button URL
+        if (callbackUrl) {
+            getFileBtn.href = callbackUrl;
+        }
+        
+        // ============ TIMER LOGIC ============
+        let timeLeft = WAIT_TIME;
+        
+        function updateTimer() {
+            timerEl.textContent = timeLeft;
+            
+            // Update progress
+            const percent = ((WAIT_TIME - timeLeft) / WAIT_TIME) * 100;
+            progressEl.style.width = percent + '%';
+            
+            // Update steps
+            if (timeLeft <= WAIT_TIME && timeLeft > 10) {
+                step1.classList.add('active');
+                statusEl.textContent = '🔐 Verifying your request...';
+            } else if (timeLeft <= 10 && timeLeft > 5) {
+                step1.classList.remove('active');
+                step1.classList.add('done');
+                step1.querySelector('.step-icon').textContent = '✓';
+                step2.classList.add('active');
+                statusEl.textContent = '📦 Preparing your file...';
+            } else if (timeLeft <= 5 && timeLeft > 0) {
+                step2.classList.remove('active');
+                step2.classList.add('done');
+                step2.querySelector('.step-icon').textContent = '✓';
+                step3.classList.add('active');
+                statusEl.textContent = '⚡ Almost ready...';
+            }
+            
+            if (timeLeft <= 0) {
+                // Timer complete
+                clearInterval(timerInterval);
+                
+                step3.classList.remove('active');
+                step3.classList.add('done');
+                step3.querySelector('.step-icon').textContent = '✓';
+                
+                timerEl.textContent = '✅';
+                timerEl.classList.add('ready');
+                statusEl.textContent = '🎉 Your file is ready! Click below to get it.';
+                
+                // Show button
+                btnContainer.classList.add('show');
+            }
+            
+            timeLeft--;
+        }
+        
+        // Start countdown
+        updateTimer(); // Initial call
+        const timerInterval = setInterval(updateTimer, 1000);
+        
+        // ============ ERROR HANDLING ============
+        if (!token && !callbackUrl) {
+            timerEl.textContent = '❌';
+            statusEl.textContent = 'Invalid link! Please try again from the bot.';
+            clearInterval(timerInterval);
+        }
+    </script>
+    
+    <!-- 
+        ============ ADSTERRA AD CODES ============
+        
+        PASTE YOUR AD CODES BELOW:
+        
+        1. Social Bar (Recommended)
+        2. Native Banner 
+        3. Direct Link (for button)
+        
+    -->
+    
 </body>
 </html>
