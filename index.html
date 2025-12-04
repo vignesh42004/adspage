@@ -146,6 +146,7 @@
       color: white;
       transition: all 0.3s ease;
       box-shadow: 0 8px 30px rgba(233, 69, 96, 0.4);
+      text-decoration: none;
     }
 
     .btn-download:hover {
@@ -164,21 +165,6 @@
     @keyframes slideUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* How to download */
-    .instructions {
-      margin-top: 24px;
-      padding: 16px;
-      background: #fff3cd;
-      border-radius: 12px;
-      font-size: 13px;
-      color: #856404;
-      display: none;
-    }
-
-    .instructions.show {
-      display: block;
     }
 
     /* Ad Section */
@@ -250,8 +236,7 @@
       <h1>Link Invalid</h1>
       <p class="subtitle">This link is invalid or expired.</p>
       <p style="color: #666; margin-top: 20px;">
-        Please request a new link from<br>
-        <strong>@YourBotUsername</strong>
+        Please request a new link from the bot.
       </p>
     </div>
 
@@ -284,19 +269,14 @@
         <span class="timer-text" id="timerText">5</span>
       </div>
 
-      <p class="status" id="status">⏳ Preparing your download...</p>
+      <p class="status" id="status">⏳ Please wait...</p>
 
       <button class="btn-download" id="btnDownload">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12,16L19,9H15V4H9V9H5L12,16M5,20V18H19V20H5Z"/>
         </svg>
-        Download Movie
+        Get My File
       </button>
-
-      <div class="instructions" id="instructions">
-        💡 <strong>Tip:</strong> If download doesn't start, 
-        right-click the button and select "Save link as..."
-      </div>
 
       <!-- Ad Section -->
       <div class="ad-section">
@@ -324,7 +304,7 @@
       // Get URL parameters
       const params = new URLSearchParams(window.location.search);
       const fileUrl = params.get('url');
-      const fileName = params.get('name') || 'Movie';
+      const fileName = params.get('name') || 'File';
       const fileSize = params.get('size') || '';
       const quality = params.get('quality') || '';
 
@@ -339,7 +319,6 @@
       const timerText = document.getElementById('timerText');
       const status = document.getElementById('status');
       const btnDownload = document.getElementById('btnDownload');
-      const instructions = document.getElementById('instructions');
 
       // Validate URL
       if (!fileUrl) {
@@ -357,7 +336,7 @@
         fileNameEl.textContent = fileName;
       }
 
-      // Timer
+      // Timer configuration
       const WAIT_TIME = 5;
       let remaining = WAIT_TIME;
       const circumference = 2 * Math.PI * 54;
@@ -367,6 +346,7 @@
         timerProgress.style.strokeDashoffset = circumference * (1 - progress);
       }
 
+      // Countdown
       const countdown = setInterval(function() {
         remaining--;
         timerText.textContent = remaining;
@@ -382,27 +362,29 @@
         timerContainer.style.display = 'none';
         status.style.display = 'none';
         btnDownload.classList.add('show');
-        instructions.classList.add('show');
       }
 
-      // Download click
-      btnDownload.addEventListener('click', function() {
+      // Download button click
+      btnDownload.addEventListener('click', function(e) {
+        e.preventDefault();
+        
         try {
-          const decoded = decodeURIComponent(fileUrl);
-          window.location.href = decoded;
-        } catch (e) {
+          // Decode the URL
+          let decoded = decodeURIComponent(fileUrl);
+          console.log('Opening URL:', decoded);
+          
+          // Open the link (works for both Telegram and regular URLs)
+          window.open(decoded, '_blank');
+          
+          // Also try direct navigation after a short delay
+          setTimeout(function() {
+            window.location.href = decoded;
+          }, 500);
+          
+        } catch (err) {
+          console.error('Error:', err);
           window.location.href = fileUrl;
         }
-
-        /*
-        // Optional: Adsterra Direct Link for extra revenue
-        // Uncomment and add your direct link:
-        
-        window.open('YOUR_ADSTERRA_DIRECT_LINK', '_blank');
-        setTimeout(function() {
-          window.location.href = decodeURIComponent(fileUrl);
-        }, 500);
-        */
       });
     })();
   </script>
