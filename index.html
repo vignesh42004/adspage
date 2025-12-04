@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify - Get Your File</title>
-   <script
+    
+    <script
   type="text/javascript"
-  src="//pl28188837.effectivegatecpm.com/c5/9f/6a/c59f6a086f4cf5cc48a61ae8b34786e3.js"
-></script>
-    <!-- Adsterra Social Bar (paste your code) -->
-    <script type="text/javascript" src="//your-social-bar-code.js"></script>
+  src="//pl28188837.effectivegatecpm.com/c5/9f/6a/c59f6a086f4cf5cc48a61ae8b34786e3.js"></script>
+    <!-- <script type="text/javascript" src="//pl[YOUR_ID].profitablegatecpm.com/xxxxx.js"></script> -->
     
     <style>
         * {
@@ -22,146 +21,219 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             color: #fff;
-            padding: 20px;
         }
         
+        /* ========== LAYOUT ========== */
+        .page-wrapper {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Left Sidebar - Desktop Only */
+        .sidebar-left {
+            display: none;
+            width: 160px;
+            padding: 20px 10px;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        /* Right Sidebar - Desktop Only */
+        .sidebar-right {
+            display: none;
+            width: 160px;
+            padding: 20px 10px;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            max-width: 100%;
+        }
+        
+        /* ========== NATIVE BANNER (4:1) - TOP ========== */
+        .native-banner-top {
+            width: 100%;
+            max-width: 728px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 20px;
+            min-height: 100px;
+        }
+        
+        .ad-label {
+            font-size: 10px;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        /* ========== MOBILE BANNER (320x50) ========== */
+        .mobile-banner {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin: 15px 0;
+        }
+        
+        .mobile-banner-inner {
+            width: 320px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* ========== MAIN CONTAINER ========== */
         .container {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
             border-radius: 24px;
-            padding: 40px 30px;
+            padding: 35px 25px;
             text-align: center;
             max-width: 420px;
             width: 100%;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            margin: 20px 0;
         }
         
         .movie-icon {
-            font-size: 70px;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
         }
         
-        @keyframes bounce {
+        @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
         
         h1 {
-            font-size: 26px;
+            font-size: 22px;
             margin-bottom: 8px;
             background: linear-gradient(90deg, #fff, #00d4ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .movie-name {
             color: #00d4ff;
-            font-size: 18px;
-            margin-bottom: 30px;
-            padding: 10px 20px;
+            font-size: 16px;
+            margin-bottom: 25px;
+            padding: 8px 16px;
             background: rgba(0, 212, 255, 0.1);
             border-radius: 20px;
             display: inline-block;
+            word-break: break-word;
         }
         
-        .timer-container {
-            margin: 30px 0;
+        /* ========== TIMER ========== */
+        .timer-section {
+            margin: 20px 0;
         }
         
         .timer {
-            font-size: 64px;
+            font-size: 56px;
             font-weight: bold;
             background: linear-gradient(135deg, #ff6b6b, #ffa500);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .timer.ready {
             background: linear-gradient(135deg, #00ff88, #00d4ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .progress-bar {
             width: 100%;
-            height: 10px;
+            height: 8px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
-            margin: 25px 0;
+            margin: 20px 0;
         }
         
         .progress {
             height: 100%;
             background: linear-gradient(90deg, #ff6b6b, #ffa500, #00d4ff, #00ff88);
             background-size: 200% 100%;
-            border-radius: 10px;
+            border-radius: 8px;
             transition: width 1s linear;
-            animation: shimmer 2s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            width: 0%;
         }
         
         .status {
-            font-size: 15px;
+            font-size: 14px;
             color: #aaa;
-            margin: 20px 0;
-            min-height: 24px;
+            margin: 15px 0;
         }
         
-        .steps {
-            text-align: left;
-            margin: 25px 0;
-            padding: 20px;
+        /* ========== STEPS ========== */
+        .steps-container {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
         }
         
-        .step {
+        .step-item {
             display: flex;
             align-items: center;
-            margin: 12px 0;
+            padding: 10px 0;
+            color: #666;
             font-size: 14px;
-            color: #888;
-            transition: color 0.3s;
+            transition: all 0.3s;
         }
         
-        .step.active {
+        .step-item.active {
             color: #00d4ff;
         }
         
-        .step.done {
+        .step-item.done {
             color: #00ff88;
         }
         
         .step-icon {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 12px;
-            font-size: 14px;
+            font-size: 12px;
+            font-weight: bold;
         }
         
-        .step.done .step-icon {
-            background: rgba(0, 255, 136, 0.2);
-        }
-        
-        .step.active .step-icon {
+        .step-item.active .step-icon {
             background: rgba(0, 212, 255, 0.2);
             animation: pulse 1.5s infinite;
+        }
+        
+        .step-item.done .step-icon {
+            background: rgba(0, 255, 136, 0.2);
         }
         
         @keyframes pulse {
@@ -169,131 +241,476 @@
             50% { transform: scale(1.1); }
         }
         
-        /* Hidden initially */
+        /* ========== BUTTONS ========== */
         .btn-container {
             display: none;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            margin-top: 20px;
         }
         
         .btn-container.show {
-            display: block;
+            display: flex;
             animation: fadeInUp 0.5s ease;
         }
         
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .get-file-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #00d4ff, #00ff88);
-            color: #000;
-            text-decoration: none;
-            padding: 18px 50px;
-            font-size: 18px;
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .dot.active {
+            background: #ff6b6b;
+            transform: scale(1.2);
+        }
+        
+        .dot.done {
+            background: #00ff88;
+        }
+        
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 40px;
+            font-size: 16px;
             font-weight: bold;
             border-radius: 50px;
+            text-decoration: none;
             transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+            width: 100%;
+            max-width: 280px;
+            border: none;
+            cursor: pointer;
         }
         
-        .get-file-btn:hover {
+        .btn-step1 {
+            background: linear-gradient(135deg, #ff6b6b, #ffa500);
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+        
+        .btn-step2 {
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            color: #000;
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+        }
+        
+        .action-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+        }
+        
+        .hidden {
+            display: none !important;
         }
         
         .note {
-            margin-top: 20px;
             font-size: 12px;
             color: #666;
+            margin-top: 12px;
+            line-height: 1.5;
         }
         
-        /* Ad Container */
-        .ad-box {
-            margin: 20px 0;
-            padding: 15px;
+        .note strong {
+            color: #00d4ff;
+        }
+        
+        /* ========== MEDIUM RECTANGLE (300x250) ========== */
+        .medium-rect-banner {
+            width: 300px;
+            height: 250px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 12px;
-            min-height: 100px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .ad-label {
-            font-size: 10px;
+        /* ========== LEADERBOARD (728x90) - Desktop Only ========== */
+        .leaderboard-banner {
+            display: none;
+            width: 728px;
+            height: 90px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            margin: 20px auto;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* ========== LARGE BANNER (468x60) ========== */
+        .large-banner {
+            display: none;
+            width: 468px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin: 15px auto;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* ========== SKYSCRAPER (160x600) ========== */
+        .skyscraper-banner {
+            width: 160px;
+            min-height: 600px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* ========== WIDE SKYSCRAPER (160x300) ========== */
+        .wide-sky-banner {
+            width: 160px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* ========== FOOTER ========== */
+        .footer {
+            text-align: center;
+            padding: 20px;
             color: #444;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 12px;
+        }
+        
+        .footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+        
+        /* ========== DESKTOP STYLES (min-width: 1024px) ========== */
+        @media (min-width: 1024px) {
+            .sidebar-left,
+            .sidebar-right {
+                display: flex;
+            }
+            
+            .mobile-banner {
+                display: none;
+            }
+            
+            .leaderboard-banner {
+                display: flex;
+            }
+            
+            .large-banner {
+                display: flex;
+            }
+            
+            .native-banner-top {
+                /* Move to sidebar on desktop */
+            }
+            
+            .container {
+                padding: 40px 30px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .timer {
+                font-size: 64px;
+            }
+        }
+        
+        /* ========== TABLET STYLES ========== */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .large-banner {
+                display: flex;
+            }
+            
+            .container {
+                max-width: 500px;
+            }
+        }
+        
+        /* ========== SMALL MOBILE ========== */
+        @media (max-width: 359px) {
+            .container {
+                padding: 25px 15px;
+            }
+            
+            .movie-icon {
+                font-size: 50px;
+            }
+            
+            .timer {
+                font-size: 48px;
+            }
+            
+            .action-btn {
+                padding: 14px 30px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="movie-icon">🎬</div>
-        <h1>Your File is Ready!</h1>
-        <div class="movie-name" id="movieName">Loading...</div>
+
+    <!-- ========== SOCIAL BAR (Auto-positioned by Adsterra) ========== -->
+    <!-- Paste your Social Bar code in <head> section above -->
+
+    <div class="page-wrapper">
         
-        <div class="timer-container">
-            <div class="timer" id="timer">15</div>
-        </div>
-        
-        <div class="progress-bar">
-            <div class="progress" id="progress" style="width: 0%"></div>
-        </div>
-        
-        <div class="status" id="status">🔐 Verifying your request...</div>
-        
-        <div class="steps">
-            <div class="step active" id="step1">
-                <div class="step-icon">1</div>
-                <span>Verifying request...</span>
+        <!-- ========== LEFT SIDEBAR (Desktop Only) ========== -->
+        <aside class="sidebar-left">
+            <!-- 160x600 Skyscraper -->
+            <div class="skyscraper-banner">
+                <div class="ad-label">Ad</div>
+                <!-- PASTE 160x600 BANNER CODE HERE -->
+                <script type="text/javascript">
+  atOptions = {
+  	'key' : '762795dd93e5c6d82a4803dc6c7f492c',
+  	'format' : 'iframe',
+  	'height' : 600,
+  	'width' : 160,
+  	'params' : {}
+  };
+</script>
+<script
+  type="text/javascript"
+  src="//www.highperformanceformat.com/762795dd93e5c6d82a4803dc6c7f492c/invoke.js"
+></script>
             </div>
-            <div class="step" id="step2">
-                <div class="step-icon">2</div>
-                <span>Preparing your file...</span>
-            </div>
-            <div class="step" id="step3">
-                <div class="step-icon">3</div>
-                <span>Almost ready...</span>
-            </div>
-        </div>
+        </aside>
         
-        <!-- Adsterra Native Banner Ad -->
-        <div class="ad-box">
-            <div class="ad-label">Sponsored</div>
-            <script
+        <!-- ========== MAIN CONTENT ========== -->
+        <main class="main-content">
+            
+            <!-- Native Banner 4:1 (Top) -->
+            <div class="native-banner-top">
+                <div class="ad-label">Sponsored</div>
+                <!-- PASTE NATIVE BANNER (4:1) CODE HERE -->
+                <script
   async="async"
   data-cfasync="false"
   src="//pl28188872.effectivegatecpm.com/7bf782da742ab399d21c3a341973ec92/invoke.js"
 ></script>
 <div id="container-7bf782da742ab399d21c3a341973ec92"></div>
-            <div id="ad-native"></div>
-        </div>
+            </div>
+            
+            <!-- Mobile Banner 320x50 -->
+            <div class="mobile-banner">
+                <div class="mobile-banner-inner">
+                    <!-- PASTE 320x50 BANNER CODE HERE -->
+                    <script type="text/javascript">
+  atOptions = {
+  	'key' : 'cb0a9f0993122aaba39b218695c72b88',
+  	'format' : 'iframe',
+  	'height' : 50,
+  	'width' : 320,
+  	'params' : {}
+  };
+</script>
+<script
+  type="text/javascript"
+  src="//www.highperformanceformat.com/cb0a9f0993122aaba39b218695c72b88/invoke.js"
+></script>
+                </div>
+            </div>
+            
+            <!-- Leaderboard 728x90 (Desktop Only) -->
+            <div class="leaderboard-banner">
+                <!-- PASTE 728x90 BANNER CODE HERE -->
+                <script type="text/javascript">
+  atOptions = {
+  	'key' : '0fba9ef1e22dd20f008f51a8d09d6e3e',
+  	'format' : 'iframe',
+  	'height' : 90,
+  	'width' : 728,
+  	'params' : {}
+  };
+</script>
+<script
+  type="text/javascript"
+  src="//www.highperformanceformat.com/0fba9ef1e22dd20f008f51a8d09d6e3e/invoke.js"
+></script>
+            </div>
+            
+            <!-- ========== MAIN CONTAINER ========== -->
+            <div class="container">
+                <div class="movie-icon">🎬</div>
+                <h1>Your File is Ready!</h1>
+                <p class="movie-name" id="movieName">Loading...</p>
+                
+                <div class="timer-section">
+                    <div class="timer" id="timer">15</div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                
+                <p class="status" id="status">🔐 Preparing your download...</p>
+                
+                <!-- Steps -->
+                <div class="steps-container">
+                    <div class="step-item active" id="step1">
+                        <div class="step-icon">1</div>
+                        <span>Verifying request...</span>
+                    </div>
+                    <div class="step-item" id="step2">
+                        <div class="step-icon">2</div>
+                        <span>Preparing file...</span>
+                    </div>
+                    <div class="step-item" id="step3">
+                        <div class="step-icon">3</div>
+                        <span>Ready for download!</span>
+                    </div>
+                </div>
+                
+                <!-- Buttons -->
+                <div class="btn-container" id="btnContainer">
+                    <div class="step-indicator">
+                        <div class="dot active" id="dot1"></div>
+                        <div class="dot" id="dot2"></div>
+                    </div>
+                    
+                    <!-- Step 1: Smart Direct Link -->
+                    <a href="#" class="action-btn btn-step1" id="btnStep1" onclick="return completeStep1()">
+                        👆 Step 1: Verify
+                    </a>
+                    
+                    <!-- Step 2: Get File -->
+                    <a href="#" class="action-btn btn-step2 hidden" id="btnStep2">
+                        📥 Step 2: Get File
+                    </a>
+                    
+                    <p class="note" id="noteText">
+                        Complete Step 1 to unlock your download
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Large Banner 468x60 (Tablet & Desktop) -->
+            <div class="large-banner">
+                <!-- PASTE 468x60 BANNER CODE HERE -->
+                <script type="text/javascript">
+  atOptions = {
+  	'key' : 'ad8b3c10ba4eebd07893b0b00f4506f3',
+  	'format' : 'iframe',
+  	'height' : 60,
+  	'width' : 468,
+  	'params' : {}
+  };
+</script>
+<script
+  type="text/javascript"
+  src="//www.highperformanceformat.com/ad8b3c10ba4eebd07893b0b00f4506f3/invoke.js"
+></script>
+            </div>
+            
+            <!-- Medium Rectangle 300x250 -->
+            <div class="medium-rect-banner">
+                <!-- PASTE 300x250 BANNER CODE HERE -->
+                <script type="text/javascript">
+  atOptions = {
+  	'key' : '346c1275b0423d56f08ce1d87e38567e',
+  	'format' : 'iframe',
+  	'height' : 250,
+  	'width' : 300,
+  	'params' : {}
+  };
+</script>
+<script
+  type="text/javascript"
+  src="//www.highperformanceformat.com/346c1275b0423d56f08ce1d87e38567e/invoke.js"
+></script>
+            </div>
+            
+            <!-- Footer -->
+            <footer class="footer">
+                <p>© 2024 Movie Bot | <a href="#">Contact</a></p>
+            </footer>
+            
+        </main>
         
-        <div class="btn-container" id="btnContainer">
-            <a href="https://www.effectivegatecpm.com/a4hz9p1n6r?key=e6ee3f2968ab0a84aa2c4bc78b1fff1a" class="get-file-btn" id="getFileBtn">
-                📥 Get File Now
-            </a>
-            <p class="note">Tap button, then tap <strong>START</strong> in Telegram</p>
-        </div>
+        <!-- ========== RIGHT SIDEBAR (Desktop Only) ========== -->
+        <aside class="sidebar-right">
+            <!-- 160x300 Wide Skyscraper -->
+            <div class="wide-sky-banner">
+                <div class="ad-label">Ad</div>
+                <!-- PASTE 160x300 BANNER CODE HERE -->
+                <script type="text/javascript">
+  atOptions = {
+  	'key' : 'ae63cca7a2b0ecb769fbb889f5b0427d',
+  	'format' : 'iframe',
+  	'height' : 300,
+  	'width' : 160,
+  	'params' : {}
+  };
+</script>
+<script
+  type="text/javascript"
+  src="//www.highperformanceformat.com/ae63cca7a2b0ecb769fbb889f5b0427d/invoke.js"
+></script>
+            </div>
+            
+            <!-- Another 160x300 -->
+            <div class="wide-sky-banner">
+                <div class="ad-label">Ad</div>
+                <script type="text/javascript">
+  atOptions = {
+  	'key' : 'ae63cca7a2b0ecb769fbb889f5b0427d',
+  	'format' : 'iframe',
+  	'height' : 300,
+  	'width' : 160,
+  	'params' : {}
+  };
+</script>
+<script
+  type="text/javascript"
+  src="//www.highperformanceformat.com/ae63cca7a2b0ecb769fbb889f5b0427d/invoke.js"
+></script>
+            </div>
+        </aside>
+        
     </div>
-    
 
-
+    <!-- ========== JAVASCRIPT ========== -->
     <script>
-        // ============ CONFIGURATION ============
-        const WAIT_TIME = 15; // seconds to wait
-        const BOT_USERNAME = "YourBotUsername"; // Your bot username without @
+        // ╔════════════════════════════════════════╗
+        // ║         CONFIGURATION                  ║
+        // ╚════════════════════════════════════════╝
         
-        // ============ GET URL PARAMETERS ============
+        // ⚠️ CHANGE THESE VALUES:
+        const ADSTERRA_SMART_LINK = "https://www.effectivegatecpm.com/a4hz9p1n6r?key=e6ee3f2968ab0a84aa2c4bc78b1fff1a";
+        const BOT_USERNAME = "@File_AssistBot"; // Without @
+        const WAIT_TIME = 15; // Seconds before showing button
+        
+        // ╔════════════════════════════════════════╗
+        // ║         URL PARAMETERS                 ║
+        // ╚════════════════════════════════════════╝
+        
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
-        const movieName = urlParams.get('movie') || urlParams.get('name') || 'Your Movie';
+        const movieName = urlParams.get('movie') || urlParams.get('name') || 'Your File';
         let callbackUrl = urlParams.get('callback');
         
         // Build callback URL if not provided
@@ -301,97 +718,119 @@
             callbackUrl = `https://t.me/${BOT_USERNAME}?start=token_${token}`;
         }
         
-        // ============ DISPLAY MOVIE NAME ============
+        // ╔════════════════════════════════════════╗
+        // ║         INITIALIZE PAGE                ║
+        // ╚════════════════════════════════════════╝
+        
+        // Set movie name
         try {
             document.getElementById('movieName').textContent = decodeURIComponent(movieName);
-        } catch (e) {
+        } catch(e) {
             document.getElementById('movieName').textContent = movieName;
         }
         
-        // ============ ELEMENTS ============
+        // Set button URLs
+        document.getElementById('btnStep1').href = ADSTERRA_SMART_LINK;
+        document.getElementById('btnStep2').href = callbackUrl || '#';
+        
+        // ╔════════════════════════════════════════╗
+        // ║         TIMER LOGIC                    ║
+        // ╚════════════════════════════════════════╝
+        
         const timerEl = document.getElementById('timer');
         const progressEl = document.getElementById('progress');
         const statusEl = document.getElementById('status');
         const btnContainer = document.getElementById('btnContainer');
-        const getFileBtn = document.getElementById('getFileBtn');
-        const step1 = document.getElementById('step1');
-        const step2 = document.getElementById('step2');
-        const step3 = document.getElementById('step3');
+        const step1El = document.getElementById('step1');
+        const step2El = document.getElementById('step2');
+        const step3El = document.getElementById('step3');
         
-        // Set button URL
-        if (callbackUrl) {
-            getFileBtn.href = callbackUrl;
-        }
-        
-        // ============ TIMER LOGIC ============
         let timeLeft = WAIT_TIME;
         
-        function updateTimer() {
+        function updateStep(stepEl, status) {
+            stepEl.classList.remove('active', 'done');
+            if (status === 'active') stepEl.classList.add('active');
+            if (status === 'done') {
+                stepEl.classList.add('done');
+                stepEl.querySelector('.step-icon').textContent = '✓';
+            }
+        }
+        
+        const countdown = setInterval(() => {
+            timeLeft--;
             timerEl.textContent = timeLeft;
             
             // Update progress
             const percent = ((WAIT_TIME - timeLeft) / WAIT_TIME) * 100;
             progressEl.style.width = percent + '%';
             
-            // Update steps
+            // Update steps based on time
             if (timeLeft <= WAIT_TIME && timeLeft > 10) {
-                step1.classList.add('active');
+                updateStep(step1El, 'active');
                 statusEl.textContent = '🔐 Verifying your request...';
             } else if (timeLeft <= 10 && timeLeft > 5) {
-                step1.classList.remove('active');
-                step1.classList.add('done');
-                step1.querySelector('.step-icon').textContent = '✓';
-                step2.classList.add('active');
+                updateStep(step1El, 'done');
+                updateStep(step2El, 'active');
                 statusEl.textContent = '📦 Preparing your file...';
             } else if (timeLeft <= 5 && timeLeft > 0) {
-                step2.classList.remove('active');
-                step2.classList.add('done');
-                step2.querySelector('.step-icon').textContent = '✓';
-                step3.classList.add('active');
+                updateStep(step2El, 'done');
+                updateStep(step3El, 'active');
                 statusEl.textContent = '⚡ Almost ready...';
             }
             
+            // Timer complete
             if (timeLeft <= 0) {
-                // Timer complete
-                clearInterval(timerInterval);
+                clearInterval(countdown);
                 
-                step3.classList.remove('active');
-                step3.classList.add('done');
-                step3.querySelector('.step-icon').textContent = '✓';
-                
+                updateStep(step3El, 'done');
                 timerEl.textContent = '✅';
                 timerEl.classList.add('ready');
-                statusEl.textContent = '🎉 Your file is ready! Click below to get it.';
+                statusEl.textContent = '🎉 Complete the steps below!';
                 
-                // Show button
+                // Show buttons
                 btnContainer.classList.add('show');
             }
+        }, 1000);
+        
+        // ╔════════════════════════════════════════╗
+        // ║         BUTTON ACTIONS                 ║
+        // ╚════════════════════════════════════════╝
+        
+        function completeStep1() {
+            // Open Smart Link in new tab
+            window.open(ADSTERRA_SMART_LINK, '_blank');
             
-            timeLeft--;
+            // Update UI after delay
+            setTimeout(() => {
+                // Hide Step 1, Show Step 2
+                document.getElementById('btnStep1').classList.add('hidden');
+                document.getElementById('btnStep2').classList.remove('hidden');
+                
+                // Update dots
+                document.getElementById('dot1').classList.remove('active');
+                document.getElementById('dot1').classList.add('done');
+                document.getElementById('dot2').classList.add('active');
+                
+                // Update note
+                document.getElementById('noteText').innerHTML = 
+                    'Tap <strong>Get File</strong>, then tap <strong>START</strong> in Telegram';
+            }, 1500);
+            
+            return false; // Prevent default navigation
         }
         
-        // Start countdown
-        updateTimer(); // Initial call
-        const timerInterval = setInterval(updateTimer, 1000);
+        // ╔════════════════════════════════════════╗
+        // ║         ERROR HANDLING                 ║
+        // ╚════════════════════════════════════════╝
         
-        // ============ ERROR HANDLING ============
         if (!token && !callbackUrl) {
+            clearInterval(countdown);
             timerEl.textContent = '❌';
-            statusEl.textContent = 'Invalid link! Please try again from the bot.';
-            clearInterval(timerInterval);
+            timerEl.classList.add('ready');
+            statusEl.textContent = '⚠️ Invalid link! Please get a new one from the bot.';
+            document.querySelector('.steps-container').style.display = 'none';
         }
     </script>
-    
-    <!-- 
-        ============ ADSTERRA AD CODES ============
-        
-        PASTE YOUR AD CODES BELOW:
-        
-        1. Social Bar (Recommended)
-        2. Native Banner 
-        3. Direct Link (for button)
-        
-    -->
-    
+
 </body>
 </html>
