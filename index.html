@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify - Get Your File</title>
     
-    <!-- ========== ADSTERRA SOCIAL BAR ========== -->
-    <script
-  type="text/javascript"
-  src="//pitofficialfollower.com/c5/9f/6a/c59f6a086f4cf5cc48a61ae8b34786e3.js"
-></script>
+    <!-- ADSTERRA SOCIAL BAR -->
+    <!--
+    <script type="text/javascript" src="//pl[YOUR_ID].profitablegatecpm.com/xxxxx.js"></script>
+    -->
     
     <style>
         * {
@@ -25,15 +24,12 @@
             color: #fff;
         }
         
-        /* ========== PAGE LAYOUT ========== */
         .page-wrapper {
             display: flex;
             min-height: 100vh;
-            position: relative;
         }
         
-        /* ========== LEFT SIDEBAR (Desktop Only - 160px ads) ========== */
-        .sidebar-left {
+        .sidebar-left, .sidebar-right {
             display: none;
             width: 180px;
             padding: 20px 10px;
@@ -43,35 +39,16 @@
             position: sticky;
             top: 0;
             height: 100vh;
-            overflow-y: auto;
         }
         
-        /* ========== RIGHT SIDEBAR (Desktop Only - 160px ads) ========== */
-        .sidebar-right {
-            display: none;
-            width: 180px;
-            padding: 20px 10px;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            overflow-y: auto;
-        }
-        
-        /* ========== MAIN CONTENT ========== */
         .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 15px;
-            max-width: 100%;
-            min-width: 0;
         }
         
-        /* ========== AD CONTAINERS ========== */
         .ad-wrapper {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 12px;
@@ -80,7 +57,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
         }
         
         .ad-label {
@@ -89,60 +65,16 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 5px;
-            text-align: center;
         }
         
-        /* Native Banner 4:1 */
-        .native-banner-top {
-            width: 100%;
-            max-width: 728px;
-            min-height: 100px;
-            margin-bottom: 15px;
-        }
+        .native-banner { width: 100%; max-width: 728px; min-height: 90px; margin-bottom: 15px; }
+        .banner-320x50 { width: 320px; height: 50px; margin: 10px 0; }
+        .banner-300x250 { width: 300px; height: 250px; margin: 15px 0; }
+        .banner-728x90 { display: none; width: 728px; height: 90px; margin: 15px 0; }
+        .banner-468x60 { display: none; width: 468px; height: 60px; margin: 15px 0; }
+        .banner-160x600 { width: 160px; height: 600px; }
+        .banner-160x300 { width: 160px; height: 300px; }
         
-        /* Mobile Banner 320x50 */
-        .mobile-banner-320x50 {
-            width: 320px;
-            height: 50px;
-            margin: 10px 0;
-        }
-        
-        /* Medium Rectangle 300x250 */
-        .banner-300x250 {
-            width: 300px;
-            height: 250px;
-            margin: 15px 0;
-        }
-        
-        /* Leaderboard 728x90 (Desktop) */
-        .banner-728x90 {
-            display: none;
-            width: 728px;
-            height: 90px;
-            margin: 15px 0;
-        }
-        
-        /* Large Banner 468x60 (Tablet+) */
-        .banner-468x60 {
-            display: none;
-            width: 468px;
-            height: 60px;
-            margin: 15px 0;
-        }
-        
-        /* Skyscraper 160x600 */
-        .banner-160x600 {
-            width: 160px;
-            height: 600px;
-        }
-        
-        /* Wide Skyscraper 160x300 */
-        .banner-160x300 {
-            width: 160px;
-            height: 300px;
-        }
-        
-        /* ========== CONTAINER ========== */
         .container {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
@@ -156,10 +88,7 @@
             margin: 15px 0;
         }
         
-        /* ========== LOADING STATE ========== */
-        .loading-container {
-            padding: 50px 20px;
-        }
+        .loading-container { padding: 50px 20px; }
         
         .spinner {
             width: 60px;
@@ -171,63 +100,22 @@
             margin: 0 auto 25px;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
-        .loading-text {
-            color: #aaa;
-            font-size: 15px;
-        }
+        .loading-text { color: #aaa; font-size: 15px; }
         
-        .loading-dots::after {
-            content: '';
-            animation: dots 1.5s infinite;
-        }
-        
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60%, 100% { content: '...'; }
-        }
-        
-        /* ========== BLOCKED STATES ========== */
-        .blocked-container {
-            display: none;
-        }
-        
-        .blocked-container.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
+        .blocked-container { display: none; }
+        .blocked-container.show { display: block; animation: fadeIn 0.5s ease; }
         
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .blocked-icon {
-            font-size: 80px;
-            margin-bottom: 20px;
-        }
-        
-        .blocked-title {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        
-        .blocked-title.adblock {
-            color: #ff4444;
-        }
-        
-        .blocked-title.vpn {
-            color: #ff8800;
-        }
-        
-        .blocked-title.both {
-            color: #ff4444;
-        }
+        .blocked-icon { font-size: 70px; margin-bottom: 20px; }
+        .blocked-title { font-size: 22px; font-weight: bold; margin-bottom: 15px; }
+        .blocked-title.adblock { color: #ff4444; }
+        .blocked-title.vpn { color: #ff8800; }
         
         .blocked-message {
             font-size: 14px;
@@ -250,21 +138,9 @@
             border-color: rgba(255, 136, 0, 0.3);
         }
         
-        .blocked-box h4 {
-            font-size: 14px;
-            margin-bottom: 10px;
-            color: #ff6b6b;
-        }
-        
-        .blocked-box.vpn h4 {
-            color: #ff8800;
-        }
-        
-        .blocked-box p {
-            font-size: 13px;
-            color: #999;
-            line-height: 1.5;
-        }
+        .blocked-box h4 { font-size: 14px; margin-bottom: 10px; color: #ff6b6b; }
+        .blocked-box.vpn h4 { color: #ff8800; }
+        .blocked-box p { font-size: 13px; color: #999; line-height: 1.5; }
         
         .steps-list {
             list-style: none;
@@ -282,9 +158,7 @@
             color: #ccc;
         }
         
-        .steps-list li:last-child {
-            border-bottom: none;
-        }
+        .steps-list li:last-child { border-bottom: none; }
         
         .step-num {
             background: rgba(255, 255, 255, 0.1);
@@ -297,7 +171,6 @@
             font-weight: bold;
             font-size: 12px;
             flex-shrink: 0;
-            color: #fff;
         }
         
         .refresh-btn {
@@ -310,9 +183,6 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
             margin-top: 10px;
         }
         
@@ -328,45 +198,10 @@
             border-radius: 12px;
             font-size: 12px;
             color: #777;
-            line-height: 1.5;
         }
         
-        .detection-status {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 15px 0;
-        }
-        
-        .detection-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            font-size: 14px;
-        }
-        
-        .detection-item.blocked {
-            background: rgba(255, 68, 68, 0.1);
-            color: #ff6b6b;
-        }
-        
-        .detection-item.passed {
-            background: rgba(0, 255, 136, 0.1);
-            color: #00ff88;
-        }
-        
-        /* ========== MAIN CONTENT ========== */
-        .main-container {
-            display: none;
-        }
-        
-        .main-container.show {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
+        .main-container { display: none; }
+        .main-container.show { display: block; animation: fadeIn 0.5s ease; }
         
         .verified-badge {
             display: inline-flex;
@@ -378,7 +213,6 @@
             border-radius: 20px;
             font-size: 12px;
             margin-bottom: 20px;
-            border: 1px solid rgba(0, 255, 136, 0.2);
         }
         
         .movie-icon {
@@ -398,7 +232,6 @@
             background: linear-gradient(90deg, #fff, #00d4ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         
         .movie-name {
@@ -410,7 +243,6 @@
             border-radius: 20px;
             display: inline-block;
             word-break: break-word;
-            max-width: 100%;
         }
         
         .file-info {
@@ -429,14 +261,7 @@
             color: #aaa;
         }
         
-        .file-info-item span {
-            color: #00d4ff;
-            font-weight: 600;
-        }
-        
-        .timer-section {
-            margin: 25px 0;
-        }
+        .file-info-item span { color: #00d4ff; font-weight: 600; }
         
         .timer {
             font-size: 60px;
@@ -444,15 +269,13 @@
             background: linear-gradient(135deg, #ff6b6b, #ffa500);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
+            margin: 25px 0;
         }
         
         .timer.ready {
             background: linear-gradient(135deg, #00ff88, #00d4ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
         
         .progress-bar {
@@ -471,19 +294,9 @@
             border-radius: 8px;
             transition: width 1s linear;
             width: 0%;
-            animation: shimmer 2s infinite linear;
         }
         
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        
-        .status {
-            font-size: 14px;
-            color: #aaa;
-            margin: 15px 0;
-        }
+        .status { font-size: 14px; color: #aaa; margin: 15px 0; }
         
         .steps-container {
             background: rgba(255, 255, 255, 0.05);
@@ -499,21 +312,12 @@
             padding: 12px 0;
             color: #555;
             font-size: 14px;
-            transition: all 0.3s;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
-        .step-item:last-child {
-            border-bottom: none;
-        }
-        
-        .step-item.active {
-            color: #00d4ff;
-        }
-        
-        .step-item.done {
-            color: #00ff88;
-        }
+        .step-item:last-child { border-bottom: none; }
+        .step-item.active { color: #00d4ff; }
+        .step-item.done { color: #00ff88; }
         
         .step-icon {
             width: 28px;
@@ -526,26 +330,20 @@
             margin-right: 12px;
             font-size: 12px;
             font-weight: bold;
-            flex-shrink: 0;
         }
         
         .step-item.active .step-icon {
             background: rgba(0, 212, 255, 0.2);
-            color: #00d4ff;
             animation: pulse 1.5s infinite;
         }
         
-        .step-item.done .step-icon {
-            background: rgba(0, 255, 136, 0.2);
-            color: #00ff88;
-        }
+        .step-item.done .step-icon { background: rgba(0, 255, 136, 0.2); }
         
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1); }
         }
         
-        /* ========== BUTTONS ========== */
         .btn-container {
             display: none;
             flex-direction: column;
@@ -554,10 +352,7 @@
             margin-top: 25px;
         }
         
-        .btn-container.show {
-            display: flex;
-            animation: fadeIn 0.5s ease;
-        }
+        .btn-container.show { display: flex; animation: fadeIn 0.5s ease; }
         
         .step-indicator {
             display: flex;
@@ -574,14 +369,8 @@
             transition: all 0.3s;
         }
         
-        .dot.active {
-            background: #ff6b6b;
-            transform: scale(1.2);
-        }
-        
-        .dot.done {
-            background: #00ff88;
-        }
+        .dot.active { background: #ff6b6b; transform: scale(1.2); }
+        .dot.done { background: #00ff88; }
         
         .action-btn {
             display: inline-flex;
@@ -612,30 +401,13 @@
             box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
         }
         
-        .action-btn:hover {
-            transform: translateY(-3px);
-        }
+        .action-btn:hover { transform: translateY(-3px); }
         
-        .action-btn:active {
-            transform: translateY(-1px);
-        }
+        .hidden { display: none !important; }
         
-        .hidden {
-            display: none !important;
-        }
+        .note { font-size: 12px; color: #666; margin-top: 15px; line-height: 1.5; }
+        .note strong { color: #00d4ff; }
         
-        .note {
-            font-size: 12px;
-            color: #666;
-            margin-top: 15px;
-            line-height: 1.5;
-        }
-        
-        .note strong {
-            color: #00d4ff;
-        }
-        
-        /* ========== FOOTER ========== */
         .footer {
             text-align: center;
             padding: 20px;
@@ -644,748 +416,481 @@
             margin-top: auto;
         }
         
-        /* ========== DESKTOP STYLES (1024px+) ========== */
+        .debug-info {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.8);
+            color: #0f0;
+            padding: 10px;
+            font-size: 11px;
+            font-family: monospace;
+            border-radius: 5px;
+            z-index: 9999;
+            max-width: 300px;
+        }
+        
         @media (min-width: 1024px) {
-            .sidebar-left,
-            .sidebar-right {
-                display: flex;
-            }
-            
-            .mobile-banner-320x50 {
-                display: none;
-            }
-            
-            .banner-728x90 {
-                display: flex;
-            }
-            
-            .banner-468x60 {
-                display: flex;
-            }
-            
-            .container {
-                padding: 40px 35px;
-                max-width: 480px;
-            }
-            
-            h1 {
-                font-size: 26px;
-            }
-            
-            .timer {
-                font-size: 70px;
-            }
-            
-            .native-banner-top {
-                /* On desktop, native banner can be in sidebar */
-                max-width: 100%;
-            }
+            .sidebar-left, .sidebar-right { display: flex; }
+            .banner-320x50 { display: none; }
+            .banner-728x90 { display: flex; }
+            .banner-468x60 { display: flex; }
+            .container { padding: 40px 35px; }
+            h1 { font-size: 26px; }
+            .timer { font-size: 70px; }
         }
         
-        /* ========== TABLET STYLES (768px - 1023px) ========== */
         @media (min-width: 768px) and (max-width: 1023px) {
-            .banner-468x60 {
-                display: flex;
-            }
-            
-            .mobile-banner-320x50 {
-                display: none;
-            }
-            
-            .container {
-                max-width: 500px;
-            }
+            .banner-468x60 { display: flex; }
+            .banner-320x50 { display: none; }
         }
         
-        /* ========== SMALL MOBILE (< 360px) ========== */
         @media (max-width: 359px) {
-            .container {
-                padding: 25px 18px;
-            }
-            
-            .movie-icon {
-                font-size: 50px;
-            }
-            
-            .timer {
-                font-size: 48px;
-            }
-            
-            .action-btn {
-                padding: 14px 30px;
-                font-size: 14px;
-            }
-            
-            .blocked-title {
-                font-size: 18px;
-            }
-            
-            .mobile-banner-320x50 {
-                width: 300px;
-            }
+            .container { padding: 25px 18px; }
+            .timer { font-size: 48px; }
+            .action-btn { padding: 14px 30px; font-size: 14px; }
+            .banner-320x50 { width: 300px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- DEBUG INFO (Remove in production) -->
+    <div class="debug-info" id="debugInfo">
+        Loading checks...
+    </div>
+
     <div class="page-wrapper">
         
-        <!-- ========== LEFT SIDEBAR (Desktop Only) ========== -->
+        <!-- LEFT SIDEBAR -->
         <aside class="sidebar-left">
-            
-            <!-- 160x600 Skyscraper -->
-            <div class="ad-wrapper banner-160x600" id="adSky1">
-                <div class="ad-label">Advertisement</div>
-                <!-- PASTE 160x600 BANNER CODE HERE -->
-                <script type="text/javascript">
-  atOptions = {
-  	'key' : '762795dd93e5c6d82a4803dc6c7f492c',
-  	'format' : 'iframe',
-  	'height' : 600,
-  	'width' : 160,
-  	'params' : {}
-  };
-</script>
-<script
-  type="text/javascript"
-  src="//pitofficialfollower.com/762795dd93e5c6d82a4803dc6c7f492c/invoke.js"
-></script>
-                <div style="width:160px;height:600px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#333;font-size:12px;">160x600</div>
+            <div class="ad-wrapper banner-160x600">
+                <div class="ad-label">Ad</div>
+                <div style="width:160px;height:600px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:#333;font-size:11px;">160×600</div>
             </div>
-            
         </aside>
         
-        <!-- ========== MAIN CONTENT ========== -->
+        <!-- MAIN -->
         <main class="main-content">
             
-            <!-- Native Banner 4:1 (Top - Mobile) -->
-            <div class="ad-wrapper native-banner-top" id="adNative">
+            <div class="ad-wrapper native-banner">
                 <div class="ad-label">Sponsored</div>
-                <!-- PASTE NATIVE BANNER (4:1) CODE HERE -->
-                <script
-  async="async"
-  data-cfasync="false"
-  src="//pitofficialfollower.com/7bf782da742ab399d21c3a341973ec92/invoke.js"
-></script>
-<div id="container-7bf782da742ab399d21c3a341973ec92"></div>
-                <div style="width:100%;height:80px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#333;font-size:12px;">Native Banner 4:1</div>
+                <div style="width:100%;height:70px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:#333;font-size:11px;">Native 4:1</div>
             </div>
             
-            <!-- Mobile Banner 320x50 -->
-            <div class="ad-wrapper mobile-banner-320x50" id="adMobile">
-                <!-- PASTE 320x50 BANNER CODE HERE -->
-                <script type="text/javascript">
-  atOptions = {
-  	'key' : 'cb0a9f0993122aaba39b218695c72b88',
-  	'format' : 'iframe',
-  	'height' : 50,
-  	'width' : 320,
-  	'params' : {}
-  };
-</script>
-<script
-  type="text/javascript"
-  src="//pitofficialfollower.com/cb0a9f0993122aaba39b218695c72b88/invoke.js"
-></script>
-                <div style="width:320px;height:50px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#333;font-size:11px;">320x50</div>
+            <div class="ad-wrapper banner-320x50">
+                <div style="width:320px;height:50px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:#333;font-size:11px;">320×50</div>
             </div>
             
-            <!-- Leaderboard 728x90 (Desktop Only) -->
-            <div class="ad-wrapper banner-728x90" id="adLeaderboard">
-                <div class="ad-label">Advertisement</div>
-                <!-- PASTE 728x90 BANNER CODE HERE -->
-                <script type="text/javascript">
-  atOptions = {
-  	'key' : '0fba9ef1e22dd20f008f51a8d09d6e3e',
-  	'format' : 'iframe',
-  	'height' : 90,
-  	'width' : 728,
-  	'params' : {}
-  };
-</script>
-<script
-  type="text/javascript"
-  src="//pitofficialfollower.com/0fba9ef1e22dd20f008f51a8d09d6e3e/invoke.js"
-></script>
-                <div style="width:728px;height:90px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#333;font-size:12px;">728x90</div>
+            <div class="ad-wrapper banner-728x90">
+                <div class="ad-label">Ad</div>
+                <div style="width:728px;height:90px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:#333;font-size:11px;">728×90</div>
             </div>
             
-            <!-- ========== MAIN CONTAINER ========== -->
+            <!-- CONTAINER -->
             <div class="container">
                 
-                <!-- LOADING STATE -->
+                <!-- LOADING -->
                 <div class="loading-container" id="loadingContainer">
                     <div class="spinner"></div>
-                    <p class="loading-text">🔍 Checking your connection<span class="loading-dots"></span></p>
+                    <p class="loading-text">🔍 Checking connection...</p>
                 </div>
                 
-                <!-- ADBLOCK BLOCKED -->
+                <!-- ADBLOCK -->
                 <div class="blocked-container" id="adblockBlocked">
                     <div class="blocked-icon">🚫</div>
                     <h2 class="blocked-title adblock">AdBlock Detected!</h2>
-                    <p class="blocked-message">
-                        We've detected an ad blocker. Please disable it to access your file.
-                    </p>
+                    <p class="blocked-message">Please disable your ad blocker to continue.</p>
                     
                     <div class="blocked-box">
-                        <h4>💡 Why do we show ads?</h4>
-                        <p>
-                            Ads help us keep this service free and maintain our servers. 
-                            We only show non-intrusive ads.
-                        </p>
+                        <h4>💡 Why?</h4>
+                        <p>Ads help us keep this service free.</p>
                     </div>
-                    
-                    <p style="font-size: 14px; color: #fff; margin: 20px 0 10px;">
-                        <strong>How to disable AdBlock:</strong>
-                    </p>
                     
                     <ul class="steps-list">
-                        <li>
-                            <span class="step-num">1</span>
-                            Click the AdBlock icon in your browser
-                        </li>
-                        <li>
-                            <span class="step-num">2</span>
-                            Select "Pause on this site" or "Disable"
-                        </li>
-                        <li>
-                            <span class="step-num">3</span>
-                            Click refresh button below
-                        </li>
+                        <li><span class="step-num">1</span> Click AdBlock icon</li>
+                        <li><span class="step-num">2</span> Pause on this site</li>
+                        <li><span class="step-num">3</span> Refresh page</li>
                     </ul>
                     
-                    <button class="refresh-btn" onclick="location.reload()">
-                        🔄 I've Disabled AdBlock - Refresh
-                    </button>
-                    
-                    <div class="warning-note">
-                        ⚠️ Your file link is still valid. After disabling AdBlock, 
-                        you can continue from where you left off.
-                    </div>
+                    <button class="refresh-btn" onclick="location.reload()">🔄 Refresh</button>
                 </div>
                 
-                <!-- VPN BLOCKED -->
+                <!-- VPN -->
                 <div class="blocked-container" id="vpnBlocked">
                     <div class="blocked-icon">🌐</div>
                     <h2 class="blocked-title vpn">VPN/Proxy Detected!</h2>
-                    <p class="blocked-message">
-                        We've detected a VPN or Proxy. Please disable it to access your file.
-                    </p>
+                    <p class="blocked-message">Please disconnect VPN to continue.</p>
                     
                     <div class="blocked-box vpn">
-                        <h4>🔒 Why is VPN not allowed?</h4>
-                        <p>
-                            Our service requires a direct connection for verification. 
-                            Please disconnect your VPN to continue.
-                        </p>
+                        <h4>🔒 Why?</h4>
+                        <p>Direct connection required for verification.</p>
                     </div>
-                    
-                    <p style="font-size: 14px; color: #fff; margin: 20px 0 10px;">
-                        <strong>How to disable VPN:</strong>
-                    </p>
                     
                     <ul class="steps-list">
-                        <li>
-                            <span class="step-num">1</span>
-                            Open your VPN app or extension
-                        </li>
-                        <li>
-                            <span class="step-num">2</span>
-                            Click "Disconnect" or turn it OFF
-                        </li>
-                        <li>
-                            <span class="step-num">3</span>
-                            Wait a few seconds, then refresh
-                        </li>
+                        <li><span class="step-num">1</span> Open VPN app</li>
+                        <li><span class="step-num">2</span> Disconnect</li>
+                        <li><span class="step-num">3</span> Refresh page</li>
                     </ul>
                     
-                    <button class="refresh-btn" onclick="location.reload()">
-                        🔄 I've Disabled VPN - Refresh
-                    </button>
-                    
-                    <div class="warning-note">
-                        ⚠️ Common VPNs: NordVPN, ExpressVPN, ProtonVPN, Windscribe, 
-                        Opera VPN, Brave VPN, browser proxy extensions
-                    </div>
+                    <button class="refresh-btn" onclick="location.reload()">🔄 Refresh</button>
                 </div>
                 
-                <!-- BOTH BLOCKED -->
+                <!-- BOTH -->
                 <div class="blocked-container" id="bothBlocked">
                     <div class="blocked-icon">⛔</div>
-                    <h2 class="blocked-title both">Access Blocked!</h2>
-                    <p class="blocked-message">
-                        Multiple issues detected. Please fix them to continue.
-                    </p>
+                    <h2 class="blocked-title adblock">Access Blocked!</h2>
+                    <p class="blocked-message">Disable AdBlock AND VPN to continue.</p>
                     
-                    <div class="detection-status">
-                        <div class="detection-item blocked">
-                            ❌ AdBlock Detected
-                        </div>
-                        <div class="detection-item blocked">
-                            ❌ VPN/Proxy Detected
-                        </div>
+                    <div class="blocked-box">
+                        <p>❌ AdBlock Detected</p>
+                        <p>❌ VPN/Proxy Detected</p>
                     </div>
                     
-                    <p style="font-size: 14px; color: #fff; margin: 20px 0 10px;">
-                        <strong>To access your file:</strong>
-                    </p>
-                    
-                    <ul class="steps-list">
-                        <li>
-                            <span class="step-num">1</span>
-                            Disable your AdBlock extension
-                        </li>
-                        <li>
-                            <span class="step-num">2</span>
-                            Disconnect your VPN/Proxy
-                        </li>
-                        <li>
-                            <span class="step-num">3</span>
-                            Refresh this page
-                        </li>
-                    </ul>
-                    
-                    <button class="refresh-btn" onclick="location.reload()">
-                        🔄 I've Fixed Both - Refresh
-                    </button>
+                    <button class="refresh-btn" onclick="location.reload()">🔄 Refresh</button>
                 </div>
                 
-                <!-- MAIN CONTENT -->
+                <!-- MAIN -->
                 <div class="main-container" id="mainContainer">
-                    <div class="verified-badge">
-                        ✅ Connection Verified
-                    </div>
+                    <div class="verified-badge">✅ Verified</div>
                     
                     <div class="movie-icon">🎬</div>
                     <h1>Your File is Ready!</h1>
                     <p class="movie-name" id="movieName">Loading...</p>
                     
-                    <!-- File Info -->
-                    <div class="file-info" id="fileInfo">
-                        <div class="file-info-item" id="qualityInfo" style="display: none;">
-                            🎞️ <span id="qualityText"></span>
-                        </div>
-                        <div class="file-info-item" id="partInfo" style="display: none;">
-                            📦 Part <span id="partText"></span>
-                        </div>
-                        <div class="file-info-item" id="sizeInfo" style="display: none;">
-                            📁 <span id="sizeText"></span>
-                        </div>
+                    <div class="file-info">
+                        <div class="file-info-item" id="qualityInfo" style="display:none;">🎞️ <span id="qualityText"></span></div>
+                        <div class="file-info-item" id="sizeInfo" style="display:none;">📁 <span id="sizeText"></span></div>
                     </div>
                     
-                    <!-- Timer -->
-                    <div class="timer-section">
-                        <div class="timer" id="timer">20</div>
-                    </div>
+                    <div class="timer" id="timer">20</div>
                     
                     <div class="progress-bar">
                         <div class="progress" id="progress"></div>
                     </div>
                     
-                    <p class="status" id="status">🔐 Preparing your download...</p>
+                    <p class="status" id="status">🔐 Preparing...</p>
                     
-                    <!-- Steps -->
                     <div class="steps-container">
                         <div class="step-item active" id="stepVerify">
-                            <div class="step-icon">1</div>
-                            <span>Verifying request...</span>
+                            <div class="step-icon">1</div><span>Verifying...</span>
                         </div>
                         <div class="step-item" id="stepLoad">
-                            <div class="step-icon">2</div>
-                            <span>Loading content...</span>
+                            <div class="step-icon">2</div><span>Loading...</span>
                         </div>
                         <div class="step-item" id="stepReady">
-                            <div class="step-icon">3</div>
-                            <span>Preparing file...</span>
+                            <div class="step-icon">3</div><span>Ready!</span>
                         </div>
                     </div>
                     
-                    <!-- Inline Ad 300x250 -->
-                    <div class="ad-wrapper banner-300x250" id="adInline" style="margin: 20px auto;">
-                        <div class="ad-label">Advertisement</div>
-                        <!-- PASTE 300x250 BANNER CODE HERE -->
-                        <script type="text/javascript">
-  atOptions = {
-  	'key' : '346c1275b0423d56f08ce1d87e38567e',
-  	'format' : 'iframe',
-  	'height' : 250,
-  	'width' : 300,
-  	'params' : {}
-  };
-</script>
-<script
-  type="text/javascript"
-  src="//pitofficialfollower.com/346c1275b0423d56f08ce1d87e38567e/invoke.js"
-></script>
-                        <div style="width:300px;height:250px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#333;font-size:12px;">300x250</div>
+                    <div class="ad-wrapper banner-300x250" style="margin:20px auto;">
+                        <div class="ad-label">Ad</div>
+                        <div style="width:300px;height:250px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:#333;font-size:11px;">300×250</div>
                     </div>
                     
-                    <!-- Buttons -->
                     <div class="btn-container" id="btnContainer">
                         <div class="step-indicator">
                             <div class="dot active" id="dot1"></div>
                             <div class="dot" id="dot2"></div>
                         </div>
                         
-                        <!-- Step 1: Smart Direct Link -->
                         <a href="#" class="action-btn btn-step1" id="btnStep1" onclick="return completeStep1()">
                             👆 Step 1: Verify
                         </a>
                         
-                        <!-- Step 2: Get File -->
-                        <a href="https://pitofficialfollower.com/bv9ncvnh?key=deee02897f2c7e43d163efe6ceeece50" class="action-btn btn-step2 hidden" id="btnStep2">
+                        <a href="#" class="action-btn btn-step2 hidden" id="btnStep2">
                             📥 Step 2: Get File
                         </a>
                         
-                        <p class="note" id="noteText">
-                            Complete verification to unlock your download
-                        </p>
+                        <p class="note" id="noteText">Complete verification</p>
                     </div>
                 </div>
                 
             </div>
             
-            <!-- Large Banner 468x60 (Tablet/Desktop) -->
-            <div class="ad-wrapper banner-468x60" id="adLarge">
-                <div class="ad-label">Advertisement</div>
-                <!-- PASTE 468x60 BANNER CODE HERE -->
-                <script type="text/javascript">
-  atOptions = {
-  	'key' : 'ad8b3c10ba4eebd07893b0b00f4506f3',
-  	'format' : 'iframe',
-  	'height' : 60,
-  	'width' : 468,
-  	'params' : {}
-  };
-</script>
-<script
-  type="text/javascript"
-  src="//pitofficialfollower.com/ad8b3c10ba4eebd07893b0b00f4506f3/invoke.js"
-></script>
-                <div style="width:468px;height:60px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#333;font-size:12px;">468x60</div>
+            <div class="ad-wrapper banner-468x60">
+                <div class="ad-label">Ad</div>
+                <div style="width:468px;height:60px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:#333;font-size:11px;">468×60</div>
             </div>
             
-            <!-- Another 300x250 at bottom -->
-            <div class="ad-wrapper banner-300x250" id="adBottom">
+            <div class="ad-wrapper banner-300x250">
                 <div class="ad-label">Sponsored</div>
-                <!-- PASTE ANOTHER 300x250 BANNER CODE HERE -->
-                 <script type="text/javascript">
-  atOptions = {
-  	'key' : '346c1275b0423d56f08ce1d87e38567e',
-  	'format' : 'iframe',
-  	'height' : 250,
-  	'width' : 300,
-  	'params' : {}
-  };
-</script>
-<script
-  type="text/javascript"
-  src="//pitofficialfollower.com/346c1275b0423d56f08ce1d87e38567e/invoke.js"
-></script>
-                <div style="width:300px;height:250px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#333;font-size:12px;">300x250</div>
+                <div style="width:300px;height:250px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:#333;font-size:11px;">300×250</div>
             </div>
             
-            <!-- Footer -->
-            <footer class="footer">
-                <p>© 2025 Movie Bot | Secure File Delivery</p>
-            </footer>
+            <footer class="footer">© 2024 Movie Bot</footer>
             
         </main>
         
-        <!-- ========== RIGHT SIDEBAR (Desktop Only) ========== -->
+        <!-- RIGHT SIDEBAR -->
         <aside class="sidebar-right">
-            
-            <!-- 160x300 Wide Skyscraper -->
-            <div class="ad-wrapper banner-160x300" id="adWide1">
+            <div class="ad-wrapper banner-160x300">
                 <div class="ad-label">Ad</div>
-                <!-- PASTE 160x300 BANNER CODE HERE -->
-                <script type="text/javascript">
-  atOptions = {
-  	'key' : 'ae63cca7a2b0ecb769fbb889f5b0427d',
-  	'format' : 'iframe',
-  	'height' : 300,
-  	'width' : 160,
-  	'params' : {}
-  };
-</script>
-<script
-  type="text/javascript"
-  src="//pitofficialfollower.com/ae63cca7a2b0ecb769fbb889f5b0427d/invoke.js"
-></script>
-                <div style="width:160px;height:300px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#333;font-size:12px;">160x300</div>
+                <div style="width:160px;height:300px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:#333;font-size:11px;">160×300</div>
             </div>
-            
-            <!-- Another 160x300 -->
-            <div class="ad-wrapper banner-160x300" id="adWide2">
+            <div class="ad-wrapper banner-160x300">
                 <div class="ad-label">Ad</div>
-                <!-- PASTE ANOTHER 160x300 BANNER CODE HERE -->
-                 <script type="text/javascript">
-  atOptions = {
-  	'key' : 'ae63cca7a2b0ecb769fbb889f5b0427d',
-  	'format' : 'iframe',
-  	'height' : 300,
-  	'width' : 160,
-  	'params' : {}
-  };
-</script>
-<script
-  type="text/javascript"
-  src="//pitofficialfollower.com/ae63cca7a2b0ecb769fbb889f5b0427d/invoke.js"
-></script>
-                <div style="width:160px;height:300px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#333;font-size:12px;">160x300</div>
+                <div style="width:160px;height:300px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:#333;font-size:11px;">160×300</div>
             </div>
-            
-            <!-- 160x600 Skyscraper -->
-            <div class="ad-wrapper banner-160x600" id="adSky2">
+            <div class="ad-wrapper banner-160x600">
                 <div class="ad-label">Ad</div>
-                <!-- PASTE ANOTHER 160x600 BANNER CODE HERE -->
-                 <script type="text/javascript">
-  atOptions = {
-  	'key' : '762795dd93e5c6d82a4803dc6c7f492c',
-  	'format' : 'iframe',
-  	'height' : 600,
-  	'width' : 160,
-  	'params' : {}
-  };
-</script>
-<script
-  type="text/javascript"
-  src="//pitofficialfollower.com/762795dd93e5c6d82a4803dc6c7f492c/invoke.js"
-></script>
-                <div style="width:160px;height:600px;background:rgba(255,255,255,0.02);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#333;font-size:12px;">160x600</div>
+                <div style="width:160px;height:600px;background:rgba(255,255,255,0.02);display:flex;align-items:center;justify-content:center;color:#333;font-size:11px;">160×600</div>
             </div>
-            
         </aside>
         
     </div>
 
-    <!-- ========== JAVASCRIPT ========== -->
     <script>
         // ╔════════════════════════════════════════════════════════════════════╗
         // ║                        CONFIGURATION                               ║
         // ╚════════════════════════════════════════════════════════════════════╝
         
-        // ⚠️ CHANGE THESE VALUES:
-        const ADSTERRA_SMART_LINK = "https://pitofficialfollower.com/bv9ncvnh?key=deee02897f2c7e43d163efe6ceeece50";
-        const BOT_USERNAME = "@File_AssistBot"; // Without @
-        const WAIT_TIME = 20; // Seconds to wait before showing button
-        
-        // ╔════════════════════════════════════════════════════════════════════╗
-        // ║                      DETECTION FLAGS                               ║
-        // ╚════════════════════════════════════════════════════════════════════╝
+        const ADSTERRA_SMART_LINK = "https://www.profitabledisplaynetwork.com/YOUR_ID";
+        const BOT_USERNAME = "YourBotUsername";
+        const WAIT_TIME = 20;
+        const DEBUG_MODE = true; // Set to false in production
         
         let adBlockDetected = false;
         let vpnDetected = false;
-        let checksComplete = false;
+        
+        // ╔════════════════════════════════════════════════════════════════════╗
+        // ║                        DEBUG LOGGER                                ║
+        // ╚════════════════════════════════════════════════════════════════════╝
+        
+        function updateDebug(text) {
+            if (DEBUG_MODE) {
+                document.getElementById('debugInfo').innerHTML = text;
+            }
+        }
+        
+        function log(msg) {
+            console.log('[Detector] ' + msg);
+        }
         
         // ╔════════════════════════════════════════════════════════════════════╗
         // ║                    ADBLOCK DETECTION                               ║
         // ╚════════════════════════════════════════════════════════════════════╝
         
-        // ╔════════════════════════════════════════════════════════════════════╗
-// ║                    ADBLOCK DETECTION (FIXED)                       ║
-// ╚════════════════════════════════════════════════════════════════════╝
-
-async function detectAdBlock() {
-    return new Promise(async (resolve) => {
-        let blocked = false;
-        let checksRun = 0;
-        let checksFailed = 0;
-        
-        // Method 1: Bait element (most reliable)
-        try {
-            checksRun++;
-            const bait = document.createElement('div');
-            bait.innerHTML = '&nbsp;';
-            bait.className = 'adsbox ad-banner textads banner-ads';
-            bait.style.cssText = `
-                position: absolute !important;
-                left: -9999px !important;
-                top: -9999px !important;
-                width: 300px !important;
-                height: 250px !important;
-                background: #fff !important;
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-            `;
-            document.body.appendChild(bait);
+        async function detectAdBlock() {
+            log('Starting AdBlock detection...');
+            let results = [];
             
-            // Wait for adblocker to act
-            await new Promise(r => setTimeout(r, 300));
-            
-            // Check if element was hidden/removed
-            const stillExists = document.body.contains(bait);
-            if (stillExists) {
-                const rect = bait.getBoundingClientRect();
-                const computedStyle = window.getComputedStyle(bait);
+            // TEST 1: Bait Element
+            try {
+                const bait = document.createElement('div');
+                bait.innerHTML = '&nbsp;';
+                bait.className = 'adsbox doubleclick ad-placement carbon-ads';
+                bait.style.cssText = 'position:fixed;top:-1000px;left:-1000px;width:1px;height:1px;';
+                document.body.appendChild(bait);
                 
-                if (rect.width === 0 || 
-                    rect.height === 0 || 
-                    computedStyle.display === 'none' ||
-                    computedStyle.visibility === 'hidden' ||
-                    computedStyle.opacity === '0') {
-                    checksFailed++;
-                    console.log('AdBlock: Bait element hidden');
-                }
-            } else {
-                checksFailed++;
-                console.log('AdBlock: Bait element removed');
+                await new Promise(r => setTimeout(r, 200));
+                
+                const exists = document.body.contains(bait);
+                const visible = bait.offsetHeight > 0;
+                
+                if (exists) bait.remove();
+                
+                const blocked = !exists || !visible;
+                results.push({ test: 'Bait', blocked });
+                log('Bait test: ' + (blocked ? 'BLOCKED' : 'OK'));
+            } catch (e) {
+                log('Bait test error: ' + e);
+                results.push({ test: 'Bait', blocked: false });
             }
             
-            // Clean up
-            if (stillExists) bait.remove();
-        } catch (e) {
-            console.log('AdBlock check 1 error:', e);
-        }
-        
-        // Method 2: Google Ads fetch test
-        try {
-            checksRun++;
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 3000);
-            
-            const response = await fetch('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {
-                method: 'HEAD',
-                mode: 'no-cors',
-                cache: 'no-store',
-                signal: controller.signal
-            });
-            
-            clearTimeout(timeoutId);
-            // If we get here, fetch succeeded (not blocked)
-            console.log('AdBlock: Google Ads fetch OK');
-            
-        } catch (e) {
-            if (e.name === 'AbortError') {
-                // Timeout - might be slow connection, not adblock
-                console.log('AdBlock: Fetch timeout (not counted as block)');
-            } else {
-                checksFailed++;
-                console.log('AdBlock: Google Ads fetch blocked');
+            // TEST 2: Fake Ad Script
+            try {
+                const fakeAd = document.createElement('div');
+                fakeAd.id = 'ad-test-' + Date.now();
+                fakeAd.className = 'adsbygoogle';
+                fakeAd.style.cssText = 'width:300px;height:250px;position:fixed;top:-2000px;left:-2000px;';
+                fakeAd.innerHTML = '<ins class="adsbygoogle" style="display:block;width:300px;height:250px;"></ins>';
+                document.body.appendChild(fakeAd);
+                
+                await new Promise(r => setTimeout(r, 200));
+                
+                const stillThere = document.body.contains(fakeAd);
+                const hasHeight = fakeAd.offsetHeight > 0;
+                
+                if (stillThere) fakeAd.remove();
+                
+                const blocked = !stillThere || !hasHeight;
+                results.push({ test: 'FakeAd', blocked });
+                log('FakeAd test: ' + (blocked ? 'BLOCKED' : 'OK'));
+            } catch (e) {
+                log('FakeAd test error: ' + e);
+                results.push({ test: 'FakeAd', blocked: false });
             }
-        }
-        
-        // Method 3: DoubleClick fetch test
-        try {
-            checksRun++;
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 3000);
             
-            const response = await fetch('https://static.doubleclick.net/instream/ad_status.js', {
-                method: 'HEAD',
-                mode: 'no-cors',
-                cache: 'no-store',
-                signal: controller.signal
-            });
-            
-            clearTimeout(timeoutId);
-            console.log('AdBlock: DoubleClick fetch OK');
-            
-        } catch (e) {
-            if (e.name !== 'AbortError') {
-                checksFailed++;
-                console.log('AdBlock: DoubleClick fetch blocked');
+            // TEST 3: Fetch Ads.js
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 2000);
+                
+                const response = await fetch('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', {
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeout);
+                results.push({ test: 'FetchGoogle', blocked: false });
+                log('FetchGoogle test: OK');
+            } catch (e) {
+                const isTimeout = e.name === 'AbortError';
+                results.push({ test: 'FetchGoogle', blocked: !isTimeout });
+                log('FetchGoogle test: ' + (isTimeout ? 'TIMEOUT' : 'BLOCKED'));
             }
+            
+            // TEST 4: Fetch DoubleClick
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 2000);
+                
+                await fetch('https://static.doubleclick.net/instream/ad_status.js', {
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeout);
+                results.push({ test: 'FetchDC', blocked: false });
+                log('FetchDC test: OK');
+            } catch (e) {
+                const isTimeout = e.name === 'AbortError';
+                results.push({ test: 'FetchDC', blocked: !isTimeout });
+                log('FetchDC test: ' + (isTimeout ? 'TIMEOUT' : 'BLOCKED'));
+            }
+            
+            // TEST 5: Fetch Facebook Ads
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 2000);
+                
+                await fetch('https://www.facebook.com/tr/', {
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeout);
+                results.push({ test: 'FetchFB', blocked: false });
+                log('FetchFB test: OK');
+            } catch (e) {
+                const isTimeout = e.name === 'AbortError';
+                results.push({ test: 'FetchFB', blocked: !isTimeout });
+                log('FetchFB test: ' + (isTimeout ? 'TIMEOUT' : 'BLOCKED'));
+            }
+            
+            // Calculate result - blocked if ANY test fails
+            const blockedTests = results.filter(r => r.blocked);
+            const isBlocked = blockedTests.length >= 1;
+            
+            log('AdBlock results: ' + blockedTests.length + '/' + results.length + ' blocked = ' + isBlocked);
+            
+            return { isBlocked, results };
         }
-        
-        // Determine if blocked based on failed checks
-        // Require at least 2 failed checks to confirm adblock
-        // This reduces false positives
-        blocked = checksFailed >= 2;
-        
-        console.log(`AdBlock Detection: ${checksRun} checks, ${checksFailed} failed, blocked=${blocked}`);
-        
-        resolve(blocked);
-    });
-}
         
         // ╔════════════════════════════════════════════════════════════════════╗
         // ║                    VPN/PROXY DETECTION                             ║
         // ╚════════════════════════════════════════════════════════════════════╝
         
-        // ╔════════════════════════════════════════════════════════════════════╗
-// ║                    VPN/PROXY DETECTION (FIXED)                     ║
-// ╚════════════════════════════════════════════════════════════════════╝
-
-async function detectVPN() {
-    return new Promise(async (resolve) => {
-        let isVPN = false;
-        
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 8000);
-            
-            // Try multiple APIs
-            let data = null;
+        async function detectVPN() {
+            log('Starting VPN detection...');
             
             const apis = [
-                'https://ipapi.co/json/',
-                'https://ipinfo.io/json',
-                'https://ip-api.com/json/?fields=status,message,org,as,proxy,hosting'
+                {
+                    url: 'https://ipapi.co/json/',
+                    getOrg: (d) => d.org || '',
+                    getProxy: (d) => d.proxy,
+                    getHosting: (d) => d.hosting
+                },
+                {
+                    url: 'https://ipinfo.io/json',
+                    getOrg: (d) => d.org || '',
+                    getProxy: (d) => false,
+                    getHosting: (d) => false
+                },
+                {
+                    url: 'https://ip-api.com/json/?fields=status,org,proxy,hosting,as',
+                    getOrg: (d) => (d.org || '') + ' ' + (d.as || ''),
+                    getProxy: (d) => d.proxy,
+                    getHosting: (d) => d.hosting
+                }
             ];
             
             for (const api of apis) {
                 try {
-                    const response = await fetch(api, {
+                    log('Trying: ' + api.url);
+                    
+                    const controller = new AbortController();
+                    const timeout = setTimeout(() => controller.abort(), 5000);
+                    
+                    const response = await fetch(api.url, {
                         signal: controller.signal,
                         cache: 'no-store'
                     });
                     
-                    if (response.ok) {
-                        data = await response.json();
-                        console.log('VPN Check API response:', api, data);
-                        break;
+                    clearTimeout(timeout);
+                    
+                    if (!response.ok) continue;
+                    
+                    const data = await response.json();
+                    log('API response: ' + JSON.stringify(data));
+                    
+                    // Check explicit flags
+                    if (api.getProxy(data) === true) {
+                        log('VPN: Proxy flag TRUE');
+                        return { isVPN: true, reason: 'Proxy flag', data };
                     }
+                    
+                    if (api.getHosting(data) === true) {
+                        log('VPN: Hosting flag TRUE');
+                        return { isVPN: true, reason: 'Hosting flag', data };
+                    }
+                    
+                    // Check organization
+                    const org = api.getOrg(data).toLowerCase();
+                    log('Checking org: ' + org);
+                    
+                    const vpnKeywords = [
+                        // VPN Providers
+                        'nordvpn', 'expressvpn', 'protonvpn', 'proton ag', 'surfshark',
+                        'mullvad', 'private internet', 'cyberghost', 'ipvanish',
+                        'windscribe', 'hotspot shield', 'tunnelbear', 'purevpn',
+                        'vyprvpn', 'hide.me', 'zenmate', 'torguard', 'ivacy',
+                        'perfect privacy', 'airvpn', 'astrill', 'trust.zone',
+                        
+                        // Hosting/Cloud (often used for VPN)
+                        'digitalocean', 'amazon', 'aws', 'google cloud', 'microsoft azure',
+                        'linode', 'vultr', 'hetzner', 'ovh', 'scaleway',
+                        'choopa', 'm247', 'datacamp', 'leaseweb', 'psychz',
+                        
+                        // Tor
+                        'tor exit', 'tor relay', 'tor network'
+                    ];
+                    
+                    for (const keyword of vpnKeywords) {
+                        if (org.includes(keyword)) {
+                            log('VPN: Found keyword: ' + keyword);
+                            return { isVPN: true, reason: 'Keyword: ' + keyword, data };
+                        }
+                    }
+                    
+                    // No VPN detected
+                    log('VPN: Not detected');
+                    return { isVPN: false, reason: 'Clean', data };
+                    
                 } catch (e) {
-                    console.log('VPN API failed:', api);
+                    log('API error: ' + e.message);
                     continue;
                 }
             }
             
-            clearTimeout(timeoutId);
-            
-            if (data) {
-                // Check for explicit proxy/hosting flags
-                if (data.proxy === true || data.hosting === true) {
-                    isVPN = true;
-                    console.log('VPN: Explicit flag detected');
-                }
-                
-                // Check organization name for VPN keywords
-                if (!isVPN) {
-                    const org = (data.org || data.as || data.company?.name || '').toLowerCase();
-                    
-                    // Only check for DEFINITE VPN providers, not all hosting
-                    const vpnProviders = [
-                        'nordvpn', 'expressvpn', 'protonvpn', 'surfshark',
-                        'mullvad', 'private internet access', 'pia', 'cyberghost',
-                        'ipvanish', 'windscribe', 'hotspot shield', 'tunnelbear',
-                        'purevpn', 'vyprvpn', 'hide.me', 'zenmate', 'ivacy',
-                        'torguard', 'perfect privacy', 'airvpn', 'astrill',
-                        'psiphon', 'ultrasurf', 'tor exit', 'tor relay'
-                    ];
-                    
-                    for (const provider of vpnProviders) {
-                        if (org.includes(provider)) {
-                            isVPN = true;
-                            console.log('VPN: Provider detected:', provider);
-                            break;
-                        }
-                    }
-                }
-            }
-            
-        } catch (e) {
-            console.log('VPN detection error:', e);
-            // On error, don't block - give user benefit of doubt
-            isVPN = false;
+            // All APIs failed - don't block
+            log('VPN: All APIs failed, allowing');
+            return { isVPN: false, reason: 'API Error' };
         }
-        
-        console.log('VPN Detection result:', isVPN);
-        resolve(isVPN);
-    });
-}
         
         // ╔════════════════════════════════════════════════════════════════════╗
         // ║                      URL PARAMETERS                                ║
@@ -1395,17 +900,15 @@ async function detectVPN() {
         const token = urlParams.get('token');
         const movieName = urlParams.get('movie') || urlParams.get('name') || 'Your File';
         const quality = urlParams.get('quality') || '';
-        const part = urlParams.get('part') || '';
         const fileSize = urlParams.get('size') || '';
         let callbackUrl = urlParams.get('callback');
         
-        // Build callback URL if not provided
         if (!callbackUrl && token) {
             callbackUrl = `https://t.me/${BOT_USERNAME}?start=token_${token}`;
         }
         
         // ╔════════════════════════════════════════════════════════════════════╗
-        // ║                    UI STATE MANAGEMENT                             ║
+        // ║                      UI FUNCTIONS                                  ║
         // ╚════════════════════════════════════════════════════════════════════╝
         
         function hideAll() {
@@ -1416,242 +919,167 @@ async function detectVPN() {
             document.getElementById('mainContainer').classList.remove('show');
         }
         
-        function showLoading() {
-            hideAll();
-            document.getElementById('loadingContainer').style.display = 'block';
-        }
-        
-        function showAdBlockBlocked() {
-            hideAll();
-            document.getElementById('adblockBlocked').classList.add('show');
-        }
-        
-        function showVPNBlocked() {
-            hideAll();
-            document.getElementById('vpnBlocked').classList.add('show');
-        }
-        
-        function showBothBlocked() {
-            hideAll();
-            document.getElementById('bothBlocked').classList.add('show');
-        }
+        function showLoading() { hideAll(); document.getElementById('loadingContainer').style.display = 'block'; }
+        function showAdBlockBlocked() { hideAll(); document.getElementById('adblockBlocked').classList.add('show'); }
+        function showVPNBlocked() { hideAll(); document.getElementById('vpnBlocked').classList.add('show'); }
+        function showBothBlocked() { hideAll(); document.getElementById('bothBlocked').classList.add('show'); }
         
         function showMainContent() {
             hideAll();
             document.getElementById('mainContainer').classList.add('show');
-            initializeMainContent();
+            initMain();
+            
+            // Hide debug in production
+            if (!DEBUG_MODE) {
+                document.getElementById('debugInfo').style.display = 'none';
+            }
         }
         
-        function showError(message) {
+        function showError(msg) {
             hideAll();
             document.getElementById('loadingContainer').style.display = 'block';
             document.getElementById('loadingContainer').innerHTML = `
-                <div style="font-size: 70px; margin-bottom: 20px;">❌</div>
-                <p style="color: #ff4444; font-size: 18px; font-weight: bold;">Invalid Link!</p>
-                <p style="color: #888; font-size: 14px; margin-top: 15px; line-height: 1.6;">
-                    ${message || 'Please get a new link from the bot.'}
-                </p>
+                <div style="font-size:70px;margin-bottom:20px;">❌</div>
+                <p style="color:#ff4444;font-size:18px;">Error</p>
+                <p style="color:#888;font-size:14px;margin-top:15px;">${msg}</p>
             `;
         }
         
         // ╔════════════════════════════════════════════════════════════════════╗
-        // ║                    MAIN CONTENT INIT                               ║
+        // ║                    MAIN INIT                                       ║
         // ╚════════════════════════════════════════════════════════════════════╝
         
-        function initializeMainContent() {
-            // Set movie name
-            try {
-                document.getElementById('movieName').textContent = decodeURIComponent(movieName);
-            } catch(e) {
-                document.getElementById('movieName').textContent = movieName;
-            }
+        function initMain() {
+            try { document.getElementById('movieName').textContent = decodeURIComponent(movieName); }
+            catch(e) { document.getElementById('movieName').textContent = movieName; }
             
-            // Set file info
             if (quality) {
                 document.getElementById('qualityInfo').style.display = 'block';
                 document.getElementById('qualityText').textContent = quality;
             }
-            
-            if (part && part !== '1') {
-                document.getElementById('partInfo').style.display = 'block';
-                document.getElementById('partText').textContent = part;
-            }
-            
             if (fileSize) {
                 document.getElementById('sizeInfo').style.display = 'block';
                 document.getElementById('sizeText').textContent = fileSize;
             }
             
-            // Set button URLs
             document.getElementById('btnStep1').href = ADSTERRA_SMART_LINK;
             document.getElementById('btnStep2').href = callbackUrl || '#';
             
-            // Start countdown
             startCountdown();
         }
         
         // ╔════════════════════════════════════════════════════════════════════╗
-        // ║                       TIMER LOGIC                                  ║
+        // ║                       COUNTDOWN                                    ║
         // ╚════════════════════════════════════════════════════════════════════╝
         
         let timeLeft = WAIT_TIME;
         let countdownInterval = null;
-        let timerPaused = false;
+        let paused = false;
         
-        function updateStep(stepEl, status) {
-            if (!stepEl) return;
-            stepEl.classList.remove('active', 'done');
-            if (status === 'active') {
-                stepEl.classList.add('active');
-            } else if (status === 'done') {
-                stepEl.classList.add('done');
-                const icon = stepEl.querySelector('.step-icon');
-                if (icon) icon.textContent = '✓';
+        function updateStep(el, status) {
+            if (!el) return;
+            el.classList.remove('active', 'done');
+            if (status === 'active') el.classList.add('active');
+            if (status === 'done') {
+                el.classList.add('done');
+                el.querySelector('.step-icon').textContent = '✓';
             }
         }
         
         function startCountdown() {
-            if (countdownInterval) return; // Already running
-            
-            const timerEl = document.getElementById('timer');
-            const progressEl = document.getElementById('progress');
-            const statusEl = document.getElementById('status');
-            const btnContainer = document.getElementById('btnContainer');
-            const stepVerify = document.getElementById('stepVerify');
-            const stepLoad = document.getElementById('stepLoad');
-            const stepReady = document.getElementById('stepReady');
+            if (countdownInterval) return;
             
             countdownInterval = setInterval(() => {
-                if (timerPaused) return;
+                if (paused) return;
                 
                 timeLeft--;
-                timerEl.textContent = Math.max(0, timeLeft);
+                document.getElementById('timer').textContent = Math.max(0, timeLeft);
+                document.getElementById('progress').style.width = ((WAIT_TIME - timeLeft) / WAIT_TIME * 100) + '%';
                 
-                const percent = ((WAIT_TIME - timeLeft) / WAIT_TIME) * 100;
-                progressEl.style.width = percent + '%';
-                
-                // Update steps based on progress
-                if (timeLeft > WAIT_TIME * 0.66) {
-                    updateStep(stepVerify, 'active');
-                    statusEl.textContent = '🔐 Verifying your request...';
-                } else if (timeLeft > WAIT_TIME * 0.33) {
-                    updateStep(stepVerify, 'done');
-                    updateStep(stepLoad, 'active');
-                    statusEl.textContent = '📦 Loading content...';
+                if (timeLeft > 14) {
+                    updateStep(document.getElementById('stepVerify'), 'active');
+                    document.getElementById('status').textContent = '🔐 Verifying...';
+                } else if (timeLeft > 7) {
+                    updateStep(document.getElementById('stepVerify'), 'done');
+                    updateStep(document.getElementById('stepLoad'), 'active');
+                    document.getElementById('status').textContent = '📦 Loading...';
                 } else if (timeLeft > 0) {
-                    updateStep(stepLoad, 'done');
-                    updateStep(stepReady, 'active');
-                    statusEl.textContent = '⚡ Almost ready...';
+                    updateStep(document.getElementById('stepLoad'), 'done');
+                    updateStep(document.getElementById('stepReady'), 'active');
+                    document.getElementById('status').textContent = '⚡ Almost ready...';
                 }
                 
                 if (timeLeft <= 0) {
                     clearInterval(countdownInterval);
-                    countdownInterval = null;
-                    
-                    updateStep(stepReady, 'done');
-                    timerEl.textContent = '✅';
-                    timerEl.classList.add('ready');
-                    statusEl.textContent = '🎉 Your file is ready! Complete the steps below.';
-                    btnContainer.classList.add('show');
+                    updateStep(document.getElementById('stepReady'), 'done');
+                    document.getElementById('timer').textContent = '✅';
+                    document.getElementById('timer').classList.add('ready');
+                    document.getElementById('status').textContent = '🎉 Ready!';
+                    document.getElementById('btnContainer').classList.add('show');
                 }
             }, 1000);
         }
         
-        function pauseCountdown() {
-            timerPaused = true;
-        }
-        
-        function resumeCountdown() {
-            timerPaused = false;
-            if (!countdownInterval && timeLeft > 0) {
-                startCountdown();
-            }
-        }
-        
-        // Pause timer when tab not visible
         document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                pauseCountdown();
-            } else if (checksComplete && !adBlockDetected && !vpnDetected) {
-                resumeCountdown();
-            }
+            paused = document.hidden;
         });
         
         // ╔════════════════════════════════════════════════════════════════════╗
-        // ║                     BUTTON ACTIONS                                 ║
+        // ║                     BUTTONS                                        ║
         // ╚════════════════════════════════════════════════════════════════════╝
         
-        let step1Completed = false;
+        let step1Done = false;
         
         function completeStep1() {
-            if (step1Completed) {
-                // Already completed, just show step 2
-                showStep2();
-                return false;
-            }
-            
-            step1Completed = true;
-            
-            // Open Smart Link in new tab
+            if (step1Done) { showStep2(); return false; }
+            step1Done = true;
             window.open(ADSTERRA_SMART_LINK, '_blank');
-            
-            // Show step 2 after delay
             setTimeout(showStep2, 2000);
-            
-            return false; // Prevent default link behavior
+            return false;
         }
         
         function showStep2() {
-            const btnStep1 = document.getElementById('btnStep1');
-            const btnStep2 = document.getElementById('btnStep2');
-            const dot1 = document.getElementById('dot1');
-            const dot2 = document.getElementById('dot2');
-            const noteText = document.getElementById('noteText');
-            
-            btnStep1.classList.add('hidden');
-            btnStep2.classList.remove('hidden');
-            
-            dot1.classList.remove('active');
-            dot1.classList.add('done');
-            dot2.classList.add('active');
-            
-            noteText.innerHTML = 'Tap <strong>Get File</strong>, then tap <strong>START</strong> in Telegram';
+            document.getElementById('btnStep1').classList.add('hidden');
+            document.getElementById('btnStep2').classList.remove('hidden');
+            document.getElementById('dot1').classList.remove('active');
+            document.getElementById('dot1').classList.add('done');
+            document.getElementById('dot2').classList.add('active');
+            document.getElementById('noteText').innerHTML = 'Tap <strong>Get File</strong> → <strong>START</strong>';
         }
         
         // ╔════════════════════════════════════════════════════════════════════╗
-        // ║                      INITIALIZATION                                ║
+        // ║                      INIT                                          ║
         // ╚════════════════════════════════════════════════════════════════════╝
         
         async function init() {
-            // Validate link first
             if (!token && !callbackUrl) {
-                showError('The link is invalid or has expired.<br>Please get a new link from the bot.');
+                showError('Invalid link. Get new link from bot.');
                 return;
             }
             
             showLoading();
+            updateDebug('Running checks...');
             
-            // Small delay to show loading animation
-            await new Promise(r => setTimeout(r, 500));
-            
-            // Run both detection checks in parallel
-            console.log('Starting detection checks...');
-            
-            const [adBlock, vpn] = await Promise.all([
+            // Run both checks
+            const [adResult, vpnResult] = await Promise.all([
                 detectAdBlock(),
                 detectVPN()
             ]);
             
-            adBlockDetected = adBlock;
-            vpnDetected = vpn;
-            checksComplete = true;
+            adBlockDetected = adResult.isBlocked;
+            vpnDetected = vpnResult.isVPN;
             
-            console.log('Detection complete - AdBlock:', adBlockDetected, 'VPN:', vpnDetected);
+            // Update debug
+            let debugText = `<b>AdBlock:</b> ${adBlockDetected ? '❌ BLOCKED' : '✅ OK'}<br>`;
+            debugText += `Tests: ${adResult.results.map(r => r.test + ':' + (r.blocked ? '❌' : '✅')).join(', ')}<br>`;
+            debugText += `<b>VPN:</b> ${vpnDetected ? '❌ ' + vpnResult.reason : '✅ OK'}<br>`;
+            updateDebug(debugText);
             
-            // Small delay for UX
-            await new Promise(r => setTimeout(r, 300));
+            log('Final: AdBlock=' + adBlockDetected + ', VPN=' + vpnDetected);
             
-            // Show appropriate screen based on detection
+            // Show result
+            await new Promise(r => setTimeout(r, 500));
+            
             if (adBlockDetected && vpnDetected) {
                 showBothBlocked();
             } else if (adBlockDetected) {
@@ -1659,21 +1087,12 @@ async function detectVPN() {
             } else if (vpnDetected) {
                 showVPNBlocked();
             } else {
-                // All clear - show main content
                 showMainContent();
             }
         }
         
-        // ╔════════════════════════════════════════════════════════════════════╗
-        // ║                         START APP                                  ║
-        // ╚════════════════════════════════════════════════════════════════════╝
-        
-        // Initialize when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', init);
-        } else {
-            init();
-        }
+        // Start
+        init();
     </script>
 
 </body>
