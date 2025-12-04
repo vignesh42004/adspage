@@ -2,149 +2,391 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Download</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Movie</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--tg-theme-bg-color,#fff);color:var(--tg-theme-text-color,#000);min-height:100vh;padding:20px;padding-bottom:100px}
-    body.dark{background:#1a1a2e;color:#fff}
-    .container{max-width:400px;margin:0 auto;text-align:center}
-    .icon{width:80px;height:80px;background:linear-gradient(135deg,#e94560,#ff6b6b);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:30px auto 20px;font-size:40px;box-shadow:0 8px 25px rgba(233,69,96,0.3)}
-    h1{font-size:22px;margin-bottom:8px}
-    .sub{color:#888;font-size:14px;margin-bottom:30px}
-    .file-card{background:var(--tg-theme-secondary-bg-color,#f5f5f5);border-radius:16px;padding:20px;margin-bottom:30px;text-align:left}
-    body.dark .file-card{background:#2a2a3e}
-    .file-name{font-size:16px;font-weight:600;margin-bottom:10px;word-break:break-all}
-    .file-meta{display:flex;gap:15px;font-size:13px;color:#888}
-    .timer{position:relative;width:120px;height:120px;margin:0 auto 15px}
-    .timer svg{transform:rotate(-90deg)}
-    .timer circle{fill:none;stroke-width:8}
-    .timer-bg{stroke:#e0e0e0}
-    body.dark .timer-bg{stroke:#444}
-    .timer-progress{stroke:#e94560;stroke-linecap:round;stroke-dasharray:314;stroke-dashoffset:314;transition:stroke-dashoffset 1s linear}
-    .timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:36px;font-weight:700;color:#e94560}
-    .timer-label{color:#888;font-size:14px;margin-bottom:20px}
-    .btn{display:none;width:100%;padding:16px;font-size:16px;font-weight:600;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(135deg,#e94560,#ff6b6b);color:#fff;margin-bottom:20px}
-    .btn:active{transform:scale(0.98)}
-    .btn.show{display:block;animation:fadeIn .5s ease}
-    .btn:disabled{opacity:.7}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    .ad-section{margin-top:20px;padding:16px;background:var(--tg-theme-secondary-bg-color,#f5f5f5);border-radius:12px}
-    body.dark .ad-section{background:#2a2a3e}
-    .ad-label{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
-    .ad-box{min-height:100px;background:rgba(0,0,0,.05);border-radius:8px;display:flex;align-items:center;justify-content:center}
-    body.dark .ad-box{background:rgba(255,255,255,.05)}
-    .loading,.error,.success{text-align:center;padding:60px 20px}
-    .spinner{width:40px;height:40px;border:3px solid rgba(233,69,96,.2);border-top-color:#e94560;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .state-icon{font-size:60px;margin-bottom:20px}
-    .hidden{display:none!important}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 24px;
+      padding: 48px 32px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+    }
+
+    .icon {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      font-size: 50px;
+      box-shadow: 0 10px 40px rgba(233, 69, 96, 0.4);
+    }
+
+    h1 {
+      color: #1a1a2e;
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .file-info {
+      background: #f8f9fa;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 32px;
+    }
+
+    .file-name {
+      color: #1a1a2e;
+      font-size: 16px;
+      font-weight: 600;
+      word-break: break-all;
+      margin-bottom: 8px;
+    }
+
+    .file-meta {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      color: #666;
+      font-size: 13px;
+    }
+
+    .file-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Timer */
+    .timer-container {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 28px;
+    }
+
+    .timer-ring {
+      transform: rotate(-90deg);
+    }
+
+    .timer-ring circle {
+      fill: none;
+      stroke-width: 10;
+    }
+
+    .timer-bg {
+      stroke: #e8e8e8;
+    }
+
+    .timer-progress {
+      stroke: url(#timerGradient);
+      stroke-linecap: round;
+      stroke-dasharray: 339;
+      stroke-dashoffset: 339;
+      transition: stroke-dashoffset 1s linear;
+    }
+
+    .timer-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 40px;
+      font-weight: 700;
+      color: #e94560;
+    }
+
+    .status {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    /* Download Button */
+    .btn-download {
+      display: none;
+      width: 100%;
+      padding: 18px 32px;
+      font-size: 18px;
+      font-weight: 600;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+      color: white;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 30px rgba(233, 69, 96, 0.4);
+      text-decoration: none;
+    }
+
+    .btn-download:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(233, 69, 96, 0.5);
+    }
+
+    .btn-download.show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      animation: slideUp 0.5s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Ad Section */
+    .ad-section {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid #eee;
+    }
+
+    .ad-label {
+      font-size: 10px;
+      color: #ccc;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+    }
+
+    .ad-box {
+      min-height: 100px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ad-placeholder {
+      color: #ddd;
+      font-size: 12px;
+    }
+
+    /* Error */
+    .error-state {
+      display: none;
+    }
+
+    .error-state.show {
+      display: block;
+    }
+
+    .error-icon {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+    }
+
+    .main-state.hidden {
+      display: none;
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      .card {
+        padding: 36px 24px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      .file-meta {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="loading" id="loading"><div class="spinner"></div><p>Loading...</p></div>
-    <div class="error hidden" id="error"><div class="state-icon">❌</div><h2>Invalid Link</h2><p style="color:#888;margin-top:12px">Please request a new link.</p></div>
-    <div class="success hidden" id="success"><div class="state-icon">✅</div><h2>File Sent!</h2><p style="color:#888;margin-top:12px">Check your chat!</p></div>
-    <div class="main hidden" id="main">
+  <div class="card">
+    <!-- Error State -->
+    <div class="error-state" id="errorState">
+      <div class="icon error-icon">❌</div>
+      <h1>Link Invalid</h1>
+      <p class="subtitle">This link is invalid or expired.</p>
+      <p style="color: #666; margin-top: 20px;">
+        Please request a new link from the bot.
+      </p>
+    </div>
+
+    <!-- Main State -->
+    <div class="main-state" id="mainState">
       <div class="icon">🎬</div>
+      
       <h1>Your Movie is Ready!</h1>
-      <p class="sub">Wait a moment then download</p>
-      <div class="file-card">
-        <div class="file-name" id="fileName">Loading...</div>
-        <div class="file-meta"><span id="fileSize">📦 --</span><span id="fileQuality">🎥 --</span></div>
-      </div>
-      <div id="timerSection">
-        <div class="timer">
-          <svg width="120" height="120" viewBox="0 0 120 120"><circle class="timer-bg" cx="60" cy="60" r="50"/><circle class="timer-progress" id="timerProgress" cx="60" cy="60" r="50"/></svg>
-          <span class="timer-text" id="timerText">5</span>
+      <p class="subtitle">High quality download link generated</p>
+
+      <div class="file-info">
+        <p class="file-name" id="fileName">Loading...</p>
+        <div class="file-meta">
+          <span id="fileSize">📦 --</span>
+          <span id="fileQuality">🎥 --</span>
         </div>
-        <p class="timer-label">Please wait...</p>
       </div>
-      <button class="btn" id="btn">⬇️ Get My File</button>
-      <div class="ad-section"><div class="ad-label">Sponsored</div><div class="ad-box"><span style="color:#aaa;font-size:12px">Advertisement</span></div></div>
+
+      <div class="timer-container" id="timerContainer">
+        <svg class="timer-ring" width="130" height="130" viewBox="0 0 130 130">
+          <defs>
+            <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#e94560"/>
+              <stop offset="100%" stop-color="#ff6b6b"/>
+            </linearGradient>
+          </defs>
+          <circle class="timer-bg" cx="65" cy="65" r="54"/>
+          <circle class="timer-progress" id="timerProgress" cx="65" cy="65" r="54"/>
+        </svg>
+        <span class="timer-text" id="timerText">5</span>
+      </div>
+
+      <p class="status" id="status">⏳ Please wait...</p>
+
+      <button class="btn-download" id="btnDownload">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12,16L19,9H15V4H9V9H5L12,16M5,20V18H19V20H5Z"/>
+        </svg>
+        Get My File
+      </button>
+
+      <!-- Ad Section -->
+      <div class="ad-section">
+        <p class="ad-label">Sponsored</p>
+        <div class="ad-box" id="adBox">
+          <!--
+            =============================================
+            PASTE YOUR ADSTERRA NATIVE AD CODE HERE
+            =============================================
+          -->
+          <span class="ad-placeholder">Advertisement</span>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!--
+    =============================================
+    PASTE YOUR POPUNDER AD CODE HERE (Optional)
+    =============================================
+  -->
+
   <script>
-    var tg=window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
-    if(tg.colorScheme==='dark')document.body.classList.add('dark');
-    
-    var params=new URLSearchParams(window.location.search);
-    var payload=params.get('payload')||'';
-    var fileName=params.get('name')||'Movie';
-    var fileSize=params.get('size')||'';
-    var quality=params.get('quality')||'HD';
-    
-    var loading=document.getElementById('loading');
-    var error=document.getElementById('error');
-    var success=document.getElementById('success');
-    var main=document.getElementById('main');
-    var timerSection=document.getElementById('timerSection');
-    var timerProgress=document.getElementById('timerProgress');
-    var timerText=document.getElementById('timerText');
-    var btn=document.getElementById('btn');
-    
-    if(!payload){
-      loading.classList.add('hidden');
-      error.classList.remove('hidden');
-    }else{
-      setTimeout(function(){
-        loading.classList.add('hidden');
-        main.classList.remove('hidden');
-        try{
-          document.getElementById('fileName').textContent=decodeURIComponent(fileName);
-          document.getElementById('fileSize').textContent='📦 '+decodeURIComponent(fileSize);
-          document.getElementById('fileQuality').textContent='🎥 '+decodeURIComponent(quality);
-        }catch(e){}
-        startTimer();
-      },800);
-    }
-    
-    var WAIT=5;
-    var remaining=WAIT;
-    var circ=2*Math.PI*50;
-    
-    function startTimer(){
-      var interval=setInterval(function(){
+    (function() {
+      // Get URL parameters
+      const params = new URLSearchParams(window.location.search);
+      const fileUrl = params.get('url');
+      const fileName = params.get('name') || 'File';
+      const fileSize = params.get('size') || '';
+      const quality = params.get('quality') || '';
+
+      // DOM Elements
+      const errorState = document.getElementById('errorState');
+      const mainState = document.getElementById('mainState');
+      const fileNameEl = document.getElementById('fileName');
+      const fileSizeEl = document.getElementById('fileSize');
+      const fileQualityEl = document.getElementById('fileQuality');
+      const timerContainer = document.getElementById('timerContainer');
+      const timerProgress = document.getElementById('timerProgress');
+      const timerText = document.getElementById('timerText');
+      const status = document.getElementById('status');
+      const btnDownload = document.getElementById('btnDownload');
+
+      // Validate URL
+      if (!fileUrl) {
+        errorState.classList.add('show');
+        mainState.classList.add('hidden');
+        return;
+      }
+
+      // Display file info
+      try {
+        fileNameEl.textContent = decodeURIComponent(fileName);
+        fileSizeEl.textContent = '📦 ' + (fileSize ? decodeURIComponent(fileSize) : 'Unknown');
+        fileQualityEl.textContent = '🎥 ' + (quality ? decodeURIComponent(quality) : 'HD');
+      } catch (e) {
+        fileNameEl.textContent = fileName;
+      }
+
+      // Timer configuration
+      const WAIT_TIME = 5;
+      let remaining = WAIT_TIME;
+      const circumference = 2 * Math.PI * 54;
+
+      function updateTimer() {
+        const progress = (WAIT_TIME - remaining) / WAIT_TIME;
+        timerProgress.style.strokeDashoffset = circumference * (1 - progress);
+      }
+
+      // Countdown
+      const countdown = setInterval(function() {
         remaining--;
-        timerText.textContent=remaining;
-        timerProgress.style.strokeDashoffset=circ*(1-(WAIT-remaining)/WAIT);
-        if(remaining<=0){
-          clearInterval(interval);
-          showBtn();
+        timerText.textContent = remaining;
+        updateTimer();
+
+        if (remaining <= 0) {
+          clearInterval(countdown);
+          showDownload();
         }
-      },1000);
-    }
-    
-    function showBtn(){
-      timerSection.style.display='none';
-      btn.classList.add('show');
-      tg.MainButton.setText('⬇️ Get My File');
-      tg.MainButton.color='#e94560';
-      tg.MainButton.textColor='#ffffff';
-      tg.MainButton.show();
-      tg.MainButton.onClick(download);
-    }
-    
-    function download(){
-      btn.disabled=true;
-      btn.textContent='⏳ Sending...';
-      tg.MainButton.setText('⏳ Sending...');
-      tg.MainButton.disable();
-      tg.sendData(JSON.stringify({action:'download',payload:payload}));
-      setTimeout(function(){
-        main.classList.add('hidden');
-        success.classList.remove('hidden');
-        tg.MainButton.hide();
-        setTimeout(function(){tg.close();},2000);
-      },1000);
-    }
-    
-    btn.addEventListener('click',download);
-    tg.BackButton.onClick(function(){tg.close();});
+      }, 1000);
+
+      function showDownload() {
+        timerContainer.style.display = 'none';
+        status.style.display = 'none';
+        btnDownload.classList.add('show');
+      }
+
+      // Download button click
+      btnDownload.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        try {
+          // Decode the URL
+          let decoded = decodeURIComponent(fileUrl);
+          console.log('Opening URL:', decoded);
+          
+          // Open the link (works for both Telegram and regular URLs)
+          window.open(decoded, '_blank');
+          
+          // Also try direct navigation after a short delay
+          setTimeout(function() {
+            window.location.href = decoded;
+          }, 500);
+          
+        } catch (err) {
+          console.error('Error:', err);
+          window.location.href = fileUrl;
+        }
+      });
+    })();
   </script>
 </body>
 </html>
